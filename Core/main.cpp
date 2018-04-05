@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <string>
 
 #include "generator.h"
 
@@ -11,6 +12,16 @@ int main() {
 	srand(time(0));
 	Generator generator;
 	generator.generate();
-	cout << "hello world" << endl;
+	for (int i = 0; i < 5; i++) {
+		string s;
+		int result;
+		if (generator.get_exp(i, s, result) == false) {
+			cout << "problem" << i << endl;
+			system("pause");
+		}
+		cout << i << endl;
+		cout << s << endl;
+		cout << result << endl;
+	}
 	return 0;
 }

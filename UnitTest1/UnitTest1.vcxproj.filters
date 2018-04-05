@@ -29,5 +29,8 @@
     <ClCompile Include="testNode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="testGenerator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

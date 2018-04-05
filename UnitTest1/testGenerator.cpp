@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include <cstdlib>
-#include <ctime>
+#include <string>
 
 #include "../Core/generator.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using std::string;
 
 namespace UnitTest1
 {		
@@ -13,15 +13,20 @@ namespace UnitTest1
 	{
 	public:
 		
-		TEST_METHOD(SingleNUM)
+		TEST_METHOD(TestOverflow)
 		{
-			srand(time(0));
-			int val = rand() % 50000;
-			Node node1(val);
+			Generator g;
+			g.set(100, 100, 1);
 			bool status;
-			status = node1.calc_val();
+			int r;
+			string s;
+			status = g.get_exp(0, s, r);
+			Assert::IsFalse(status);
+			g.generate();
+			status = g.get_exp(0, s, r);
 			Assert::IsTrue(status);
-			Assert::AreEqual(val, node1.get_val());
+			status = g.get_exp(1, s, r);
+			Assert::IsFalse(status);
 		}
 
 	};

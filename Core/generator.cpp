@@ -116,16 +116,27 @@ Node * Generator::generate_tree(int limit) {
 	else {
 		OPRTYPE opr = OPRTYPE(rand() % OPRNUM);
 		p = new Node(opr);
+
 		int limit1, limit2;
 		if (limit == 2) limit1 = limit2 = 1;
 		else {
 			limit1 = (rand() % (limit - 2)) + 1;
 			limit2 = limit - limit1;
 		}
-		do {
-			p->set_lchild(generate_tree(limit1));
-			p->set_rchild(generate_tree(limit2));
-		} while (p->calc_val());
+
+		while(1) {
+			Node *pl, *pr;
+			pl = generate_tree(limit1);
+			pr = generate_tree(limit2);
+			p->set_lchild(pl);
+			p->set_rchild(pr);
+
+			if (p->calc_val()) break;
+			else {
+				delete pl;
+				delete pr;
+			}
+		}
 	}
 
 	return p;
@@ -135,18 +146,22 @@ Node * Generator::generate_tree(int limit) {
 bool Generator::generate() {
 	arr.clear();
 	for (int i = 0; i < setting.exp_num; i++) {
-		Node * p;
-		bool different;
-		do {
-			different = true;
-			p = generate_tree(setting.num_limit);
+		Node * p = generate_tree(setting.num_limit);
+		bool unique;
+		while(1) {
+			unique = true;
 			for (int j = 0; j < i; j++) {
-				if (equal(p, arr[i])) {
-					different = false;
+				if (equal(p, arr[j])) {
+					unique = false;
 					break;
 				}
 			}
-		} while (!different);
+			if (unique) break;
+			else {
+				delete p;
+				p = generate_tree(setting.num_limit);
+			}
+		}
 		arr.push_back(p);
 	}
 	return true;
