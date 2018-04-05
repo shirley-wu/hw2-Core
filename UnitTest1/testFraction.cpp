@@ -3,7 +3,7 @@
 #include <sstream>
 #include <string>
 
-#include "../Core/num.h"
+#include "../Core/fraction.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using std::stringstream;
@@ -23,6 +23,16 @@ namespace UnitTest1
 			ss << f;
 			ss >> s;
 			Assert::AreEqual(string("1/2"), s);
+		}
+
+		TEST_METHOD(PrintInt)
+		{
+			Fraction f(12);
+			stringstream ss;
+			string s;
+			ss << f;
+			ss >> s;
+			Assert::AreEqual(string("12"), s);
 		}
 
 		TEST_METHOD(PrintZero)
@@ -77,6 +87,17 @@ namespace UnitTest1
 			ss << f;
 			ss >> s;
 			Assert::AreEqual(string("27/28"), s);
+		}
+
+		TEST_METHOD(ExpFraction)
+		{
+			Fraction f(4, 5);
+			f = f ^ 5;
+			stringstream ss;
+			string s;
+			ss << f;
+			ss >> s;
+			Assert::AreEqual(string("1024/3125"), s);
 		}
 
 	};

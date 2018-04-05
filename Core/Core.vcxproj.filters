@@ -27,12 +27,18 @@
     <ClCompile Include="num.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="fraction.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generator.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="num.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="fraction.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

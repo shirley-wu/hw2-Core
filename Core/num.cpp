@@ -6,118 +6,60 @@
 using namespace std;
 
 
-int gcd(int a, int b) {
-	// greatest common divisor
-	if (a < b) {
-		int tmp = a;
-		a = b;
-		b = tmp;
-	}
-	while (b > 0) {
-		int tmp = a % b;
-		a = b;
-		b = tmp;
-	}
-	return a;
+Num::operator double() const {
+	if (type == DOUBLE) return dat.double_val;
+	else if (type == INT) return (double)dat.int_val;
+	else return (double)dat.f_val;
 }
 
 
-int lcm(int a, int b) {
-	// least common multiple
-	int g = gcd(a, b);
-	return a / g * b;
+Num Num::operator+(const Num& f) const {
+	if (type != f.type || type == DOUBLE) {
+		return Num((double)(*this) + (double)f);
+	}
+	else if (type == INT){
+		return Num(dat.int_val + f.dat.int_val);
+	}
+	else return Num(dat.f_val + f.dat.f_val);
 }
 
 
-Fraction::operator double() const {
-	if (denom != 0) return (double)numer / denom;
-	else {
-		cout << "problem!" << endl;
+Num Num::operator-(const Num& f) const {
+	if (type != f.type || type == DOUBLE) {
+		return Num((double)(*this) - (double)f);
 	}
+	else if (type == INT) {
+		return Num(dat.int_val - f.dat.int_val);
+	}
+	else return Num(dat.f_val - f.dat.f_val);
 }
 
 
-Fraction Fraction::operator+(const Fraction& f) const {
-	// TODO: can be quicker
-	int nv, dv;
-	dv = lcm(denom, f.denom);
-	nv = dv / denom * numer + dv / f.denom * f.numer;
-
-	if (nv == 0) dv = 1;
-	else {
-		int g = gcd(nv, dv);
-		nv /= g;
-		dv /= g;
+Num Num::operator*(const Num& f) const {
+	if (type != f.type || type == DOUBLE) {
+		return Num((double)(*this) * (double)f);
 	}
-
-	return Fraction(nv, dv);
+	else if (type == INT) {
+		return Num(dat.int_val * f.dat.int_val);
+	}
+	else return Num(dat.f_val * f.dat.f_val);
 }
 
 
-Fraction Fraction::operator-(const Fraction& f) const {
-	// TODO: can be quicker
-	int nv, dv;
-	dv = lcm(denom, f.denom);
-	nv = dv / denom * numer - dv / f.denom * f.numer;
-
-	if (nv == 0) dv = 1;
-	else {
-		int g = gcd(nv, dv);
-		nv /= g;
-		dv /= g;
+Num Num::operator/(const Num& f) const {
+	if (type != f.type || type == DOUBLE) {
+		return Num((double)(*this) / (double)f);
 	}
-
-	return Fraction(nv, dv);
+	else if (type == INT) {
+		return Num(dat.int_val / f.dat.int_val);
+	}
+	else return Num(dat.f_val / f.dat.f_val);
 }
 
 
-Fraction Fraction::operator*(const Fraction& f) const {
-	// TODO: can be quicker
-	int nv, dv;
-	dv = denom * f.denom;
-	nv = numer * f.numer;
-
-	if (nv == 0) dv = 1;
-	else {
-		int g = gcd(nv, dv);
-		nv /= g;
-		dv /= g;
-	}
-
-	return Fraction(nv, dv);
-}
-
-
-Fraction Fraction::operator/(const Fraction& f) const {
-	// TODO: can be quicker
-	int nv, dv;
-	dv = denom * f.numer;
-	nv = numer * f.denom;
-
-	if (nv == 0) dv = 1;
-	else {
-		int g = gcd(nv, dv);
-		nv /= g;
-		dv /= g;
-	}
-
-	return Fraction(nv, dv);
-}
-
-
-Fraction Fraction::operator^(int exp) const {
-	int nv = pow(numer, exp);
-	int dv = pow(numer, exp);
-	return Fraction(nv, dv);
-}
-
-
-ostream& operator<<(ostream& os, const Fraction& f) {
-	if (f.numer != 0) {
-		os << f.numer << '/' << f.denom;
-	}
-	else {
-		os << 0;
-	}
+ostream& operator<<(ostream& os, const Num& n) {
+	if (n.type == INT) os << n.dat.int_val;
+	else if (n.type == DOUBLE) os << n.dat.double_val;
+	else os << n.dat.f_val;
 	return os;
 }

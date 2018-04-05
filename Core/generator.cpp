@@ -137,6 +137,7 @@ Node * Generator::generate_tree(int limit, bool num_en) {
 			else {
 				delete pl;
 				delete pr;
+				// TODO: don't have to
 			}
 		}
 	}
