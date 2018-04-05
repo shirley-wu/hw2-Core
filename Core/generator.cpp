@@ -104,10 +104,12 @@ bool to_expression(const Node * t, string& s) {
 }
 
 
-Node * Generator::generate_tree(int limit) {
+Node * Generator::generate_tree(int limit, bool num_en) {
 	Node * p;
 	NODETYPE type;
-	type = limit == 1 ? NUM : NODETYPE(rand() % TYPENUM);
+	if (limit == 1) type = NUM;
+	else if (num_en == false) type = OPR;
+	else type = NODETYPE(rand() % TYPENUM);
 
 	if (type == NUM) {
 		NUMTYPE val = rand() % setting.num_max;
@@ -124,7 +126,7 @@ Node * Generator::generate_tree(int limit) {
 			limit2 = limit - limit1;
 		}
 
-		while(1) {
+		while(true) {
 			Node *pl, *pr;
 			pl = generate_tree(limit1);
 			pr = generate_tree(limit2);
@@ -146,7 +148,7 @@ Node * Generator::generate_tree(int limit) {
 bool Generator::generate() {
 	arr.clear();
 	for (int i = 0; i < setting.exp_num; i++) {
-		Node * p = generate_tree(setting.num_limit);
+		Node * p = generate_tree(setting.num_limit, false);
 		bool unique;
 		while(1) {
 			unique = true;

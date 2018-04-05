@@ -63,7 +63,7 @@ private:
 	Setting setting;
 	std::vector<Node *> arr; // #TODO: vector may be too slow
 
-	Node * generate_tree(int limit);
+	Node * generate_tree(int limit, bool num_en = true);
 
 public:
 	void set(int num_max, int num_limit, int exp_num) {
