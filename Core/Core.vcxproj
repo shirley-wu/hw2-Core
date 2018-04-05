@@ -119,9 +119,11 @@
     <ClCompile Include="calc.cpp" />
     <ClCompile Include="generator.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="num.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="generator.h" />
+    <ClInclude Include="num.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

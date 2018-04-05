@@ -1,10 +1,13 @@
 // ConsoleApplication1.cpp: 定义控制台应用程序的入口点。
 //
 
-#include "stdio.h"
-#include "stdlib.h"
+#include "cstdio"
+#include "cstdlib"
 #include "string"
 #include "iostream"
+
+using namespace std;
+
 
 typedef struct code {//字符栈
 	struct code *next;
