@@ -18,7 +18,7 @@ namespace UnitTest1
 			Generator g;
 			g.set(100, 100, 1);
 			bool status;
-			int r;
+			NUMTYPE r;
 			string s;
 			status = g.get_exp(0, s, r);
 			Assert::IsFalse(status);

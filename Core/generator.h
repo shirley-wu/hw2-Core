@@ -7,7 +7,7 @@
 typedef enum { NUM, OPR } NODETYPE;
 const int TYPENUM = 2;
 
-typedef int NUMTYPE;
+typedef double NUMTYPE;
 
 typedef enum { ADD, SUB, MUL, DIV } OPRTYPE;
 const int OPRNUM = 4;
@@ -70,6 +70,6 @@ public:
 		setting.set(num_max, num_limit, exp_num);
 	}
 	bool generate();
-	bool get_exp(int i, std::string& s, int& result);
+	bool get_exp(int i, std::string& s, NUMTYPE& result);
 
 };

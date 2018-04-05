@@ -16,7 +16,7 @@ namespace UnitTest1
 		TEST_METHOD(SingleNUM)
 		{
 			srand(time(0));
-			int val = rand() % 50000;
+			NUMTYPE val = rand() % 50000;
 			Node node1(val);
 			bool status;
 			status = node1.calc_val();
@@ -25,7 +25,7 @@ namespace UnitTest1
 		}
 
 		TEST_METHOD(SingleADD) {
-			int val1, val2;
+			NUMTYPE val1, val2;
 			val1 = rand() % 50000;
 			val2 = rand() % 50000;
 			Node node1(ADD);
@@ -41,7 +41,7 @@ namespace UnitTest1
 		}
 
 		TEST_METHOD(SingleSUB) {
-			int val1, val2;
+			NUMTYPE val1, val2;
 			/*do {
 				val1 = rand() % 50000;
 				val2 = rand() % 50000;
@@ -67,7 +67,7 @@ namespace UnitTest1
 		}
 
 		TEST_METHOD(SingleMUL) {
-			int val1, val2;
+			NUMTYPE val1, val2;
 			val1 = rand() % 50000;
 			val2 = rand() % 50000;
 			Node node1(MUL);
@@ -83,7 +83,7 @@ namespace UnitTest1
 		}
 
 		TEST_METHOD(SingleDIV) {
-			int val1, val2;
+			NUMTYPE val1, val2;
 			val1 = rand() % 50000;
 			val2 = rand() % 50000 + 1;
 			Node node1(DIV);
@@ -105,7 +105,7 @@ namespace UnitTest1
 		}
 
 		TEST_METHOD(Equal) {
-			int val1 = rand()%50000, val2 = rand()%50000, val3 = rand()%50000;
+			NUMTYPE val1 = rand()%50000, val2 = rand()%50000, val3 = rand()%50000;
 			Node node1(ADD), node2(ADD), node3(MUL), node4(MUL);
 			Node *p, *q;
 

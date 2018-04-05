@@ -168,7 +168,7 @@ bool Generator::generate() {
 }
 
 
-bool Generator::get_exp(int i, string& s, int& result) {
+bool Generator::get_exp(int i, string& s, NUMTYPE& result) {
 	if (i >= arr.size()) return false;
 	Node * t = arr[i];
 	if (to_expression(t, s) == false) return false;

@@ -8,20 +8,27 @@
 using namespace std;
 
 
+void Calc(char cal[]);
+
+
 int main() {
 	srand(time(0));
 	Generator generator;
 	generator.generate();
 	for (int i = 0; i < 5; i++) {
 		string s;
-		int result;
+		NUMTYPE result;
 		if (generator.get_exp(i, s, result) == false) {
 			cout << "problem" << i << endl;
 			system("pause");
 		}
-		cout << i << endl;
-		cout << s << endl;
-		cout << result << endl;
+		char str[10000];
+		strcpy(str, s.c_str());
+		cout << "index: " << i << endl;
+		cout << "string: " << s << endl;
+		cout << "result: " << result << endl;
+		cout << "calc:" << endl;
+		Calc(str);
 	}
 	return 0;
 }

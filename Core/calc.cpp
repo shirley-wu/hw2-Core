@@ -1,11 +1,11 @@
 // ConsoleApplication1.cpp: 定义控制台应用程序的入口点。
 //
 
-#include "stdafx.h"
 #include "stdio.h"
 #include "stdlib.h"
 #include "string"
 #include "iostream"
+
 typedef struct code {//字符栈
 	struct code *next;
 	char data;
@@ -128,13 +128,15 @@ int check(char *exp) {//如果有括号，检验括号是否匹配
 	if (!stackempty(s)) return 0;
 	else return 1;
 }
-void Calc() {
+
+
+void Calc(char cal[]) {
 	sstack code;
-	Linklist num;
+	Linklist num=NULL;
 	int count = 0,sign;
 	double sum = 0,x,z,result;
-	char cal[200],e,f;//算式总长不得超过200
-	gets_s(cal);
+	char e,f;//算式总长不得超过200
+	// gets_s(cal);
 	if (check(cal) == 0) {
 		printf("ERROR:Cracket Error\n");
 		return;
@@ -216,10 +218,3 @@ void Calc() {
 	printf("%f\n", result);
 
 }
-int main()
-{
-	Calc();
-	system("pause");
-	return 0;
-}
-
