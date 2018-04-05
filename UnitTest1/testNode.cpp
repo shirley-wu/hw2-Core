@@ -9,7 +9,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest1
 {		
-	TEST_CLASS(UnitNode)
+	TEST_CLASS(TestNode)
 	{
 	public:
 		

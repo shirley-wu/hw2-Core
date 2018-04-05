@@ -1,5 +1,8 @@
 #pragma once
 
+#include <ostream>
+#include <assert.h>
+
 
 class Fraction {
 
@@ -8,14 +11,19 @@ private:
 	int denom = 1;
 
 public:
-	Fraction(int nv, int dv) { numer = nv; denom = dv; }
-	Fraction(int iv, int nv, int dv) { denom = dv; numer = nv + iv * denom; }
+	Fraction() { }
+	Fraction(int nv, int dv) {
+		assert(denom != 0);
+		numer = nv;
+		denom = dv;
+	}
 	operator double() const;
 	Fraction operator+(const Fraction& f) const;
 	Fraction operator-(const Fraction& f) const;
 	Fraction operator*(const Fraction& f) const;
 	Fraction operator/(const Fraction& f) const;
 	Fraction operator^(int exp) const;
+	friend std::ostream& operator<<(std::ostream& os, const Fraction& f);
 
 };
 

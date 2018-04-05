@@ -51,8 +51,8 @@ typedef struct Setting {
 	int num_limit = 20;
 	int exp_num   = 5;
 
-	void set(int num_max, int num_limit, int exp_num) {
-		num_max = num_max; num_limit = num_limit; exp_num = exp_num;
+	void set(int mv, int lv, int ev) {
+		num_max = mv; num_limit = lv; exp_num = ev;
 	}
 } Setting;
 

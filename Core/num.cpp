@@ -18,7 +18,7 @@ int gcd(int a, int b) {
 		a = b;
 		b = tmp;
 	}
-	return b;
+	return a;
 }
 
 
@@ -109,4 +109,15 @@ Fraction Fraction::operator^(int exp) const {
 	int nv = pow(numer, exp);
 	int dv = pow(numer, exp);
 	return Fraction(nv, dv);
+}
+
+
+ostream& operator<<(ostream& os, const Fraction& f) {
+	if (f.numer != 0) {
+		os << f.numer << '/' << f.denom;
+	}
+	else {
+		os << 0;
+	}
+	return os;
 }

@@ -9,7 +9,7 @@ using std::string;
 
 namespace UnitTest1
 {		
-	TEST_CLASS(UnitGenerator)
+	TEST_CLASS(TestGenerator)
 	{
 	public:
 		
@@ -21,12 +21,14 @@ namespace UnitTest1
 			NUMTYPE r;
 			string s;
 			status = g.get_exp(0, s, r);
-			Assert::IsFalse(status);
+			Assert::IsFalse(status, L"no expression");
 			g.generate();
 			status = g.get_exp(0, s, r);
-			Assert::IsTrue(status);
+			Assert::IsTrue(status, L"proper expression");
 			status = g.get_exp(1, s, r);
-			Assert::IsFalse(status);
+			Assert::IsFalse(status, L"overflow");
+			status = g.get_exp(-1, s, r);
+			Assert::IsFalse(status, L"improper quest");
 		}
 
 	};
