@@ -6,15 +6,15 @@
 using namespace std;
 
 
-int gcd(int a, int b) {
+long long gcd(long long a, long long b) {
 	// greatest common divisor
 	if (a < b) {
-		int tmp = a;
+		long long tmp = a;
 		a = b;
 		b = tmp;
 	}
 	while (b > 0) {
-		int tmp = a % b;
+		long long tmp = a % b;
 		a = b;
 		b = tmp;
 	}
@@ -22,9 +22,9 @@ int gcd(int a, int b) {
 }
 
 
-int lcm(int a, int b) {
+long long lcm(long long a, long long b) {
 	// least common multiple
-	int g = gcd(a, b);
+	long long g = gcd(a, b);
 	return a / g * b;
 }
 
@@ -40,13 +40,13 @@ Fraction::operator double() const {
 
 Fraction Fraction::operator+(const Fraction& f) const {
 	// TODO: can be quicker
-	int nv, dv;
+	long long nv, dv;
 	dv = lcm(denom, f.denom);
 	nv = dv / denom * numer + dv / f.denom * f.numer;
 
 	if (nv == 0) dv = 1;
 	else {
-		int g = gcd(nv, dv);
+		long long g = gcd(nv, dv);
 		nv /= g;
 		dv /= g;
 	}
@@ -57,13 +57,13 @@ Fraction Fraction::operator+(const Fraction& f) const {
 
 Fraction Fraction::operator-(const Fraction& f) const {
 	// TODO: can be quicker
-	int nv, dv;
+	long long nv, dv;
 	dv = lcm(denom, f.denom);
 	nv = dv / denom * numer - dv / f.denom * f.numer;
 
 	if (nv == 0) dv = 1;
 	else {
-		int g = gcd(nv, dv);
+		long long g = gcd(nv, dv);
 		nv /= g;
 		dv /= g;
 	}
@@ -74,13 +74,13 @@ Fraction Fraction::operator-(const Fraction& f) const {
 
 Fraction Fraction::operator*(const Fraction& f) const {
 	// TODO: can be quicker
-	int nv, dv;
+	long long nv, dv;
 	dv = denom * f.denom;
 	nv = numer * f.numer;
 
 	if (nv == 0) dv = 1;
 	else {
-		int g = gcd(nv, dv);
+		long long g = gcd(nv, dv);
 		nv /= g;
 		dv /= g;
 	}
@@ -91,13 +91,13 @@ Fraction Fraction::operator*(const Fraction& f) const {
 
 Fraction Fraction::operator/(const Fraction& f) const {
 	// TODO: can be quicker
-	int nv, dv;
+	long long nv, dv;
 	dv = denom * f.numer;
 	nv = numer * f.denom;
 
 	if (nv == 0) dv = 1;
 	else {
-		int g = gcd(nv, dv);
+		long long g = gcd(nv, dv);
 		nv /= g;
 		dv /= g;
 	}

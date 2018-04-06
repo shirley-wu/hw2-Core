@@ -15,7 +15,7 @@ int main() {
 	char str[10000];
 	srand((unsigned)time(0));
 	Generator generator;
-	generator.set(1000, 20, 10, DOUBLE);
+	generator.set(3, 20, 10, DOUBLE, 3);
 	generator.generate();
 	for (int i = 0; i < 10; i++) {
 		string s;

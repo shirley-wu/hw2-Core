@@ -39,7 +39,7 @@ public:
 	void set_lchild(Node * p) { lchild = p; calculated = false; }
 	void set_rchild(Node * p) { rchild = p; calculated = false; }
 
-	bool calc_val();
+	bool calc_val(double limit = -1);
 	Num get_val();
 
 	friend bool equal(const Node * t1, const Node * t2);

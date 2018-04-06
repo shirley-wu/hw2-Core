@@ -7,7 +7,7 @@
 using namespace std;
 
 
-bool Node::calc_val() {
+bool Node::calc_val(double limit) {
 	if (calculated) return true;
 	if (type == NUM) {
 		assert(lchild == NULL);
@@ -17,21 +17,23 @@ bool Node::calc_val() {
 	else if (type == OPR) {
 		assert(lchild != NULL);
 		assert(rchild != NULL);
-		Num lval = lchild->get_val(), rval = rchild->get_val();
+		Num lval = lchild->get_val(), rval = rchild->get_val(), fval;
 		if (dat.opr == ADD) {
-			val = lval + rval;
+			fval = lval + rval;
 		}
 		else if (dat.opr == SUB) {
 			if (lval < rval) return false;
-			val = lval - rval;
+			fval = lval - rval;
 		}
 		else if (dat.opr == MUL) {
-			val = lval * rval;
+			fval = lval * rval;
 		}
 		else if (dat.opr == DIV) {
 			if (rval == 0.0) return false;
-			val = lval / rval;
+			fval = lval / rval;
 		}
+		if (limit > 0 && fval > limit) return false;
+		val = fval;
 	}
 	calculated = true;
 	return true;

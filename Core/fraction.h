@@ -7,16 +7,16 @@
 class Fraction {
 
 private:
-	int numer = 0;
-	int denom = 1;
+	long long numer = 0;
+	long long denom = 1;
 
 public:
 	Fraction() { }
-	Fraction(int nv) {
+	Fraction(long long nv) {
 		numer = nv;
 		denom = 1;
 	}
-	Fraction(int nv, int dv) {
+	Fraction(long long nv, long long dv) {
 		assert(denom != 0);
 		numer = nv;
 		denom = dv;

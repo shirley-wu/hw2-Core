@@ -15,7 +15,7 @@ Node * Generator::generate_tree(int limit, bool num_en) {
 	else type = NODETYPE(rand() % TYPENUM);
 
 	if (type == NUM) {
-		Num val = Num::randomNum(setting.type);
+		Num val = Num::randomNum(setting.type, setting.num_max, setting.precision);
 		p = new Node(val);
 	}
 	else {
@@ -36,7 +36,7 @@ Node * Generator::generate_tree(int limit, bool num_en) {
 			p->set_lchild(pl);
 			p->set_rchild(pr);
 
-			if (p->calc_val()) break;
+			if (p->calc_val(setting.num_max)) break;
 			else {
 				delete pl;
 				delete pr;
@@ -79,5 +79,8 @@ bool Generator::get_exp(int i, string& s, Num& result) {
 	Node * t = arr[i];
 	if (to_expression(t, s) == false) return false;
 	result = t->get_val();
+	if (result < 0.0) {
+		cin.get();
+	}
 	return true;
 }
