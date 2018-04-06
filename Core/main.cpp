@@ -23,7 +23,6 @@ int main() {
 			cout << "problem" << i << endl;
 			system("pause");
 		}
-		cout << "index: " << i << endl;
 		cout << "string: " << s << endl;
 		cout << "result: " << result << endl;
 	}
@@ -36,13 +35,12 @@ int main() {
 			cout << "problem" << i << endl;
 			system("pause");
 		}
-		// char str[10000];
-		// strcpy(str, s.c_str());
-		cout << "index: " << i << endl;
+		char str[10000];
+		strcpy(str, s.c_str());
 		cout << "string: " << s << endl;
 		cout << "result: " << result << endl;
 		cout << "calc:" << endl;
-		// Calc(str);
+		Calc(str);
 	}
 	generator.set(1000, 20, 10, FRACTION);
 	generator.generate();
@@ -53,7 +51,8 @@ int main() {
 			cout << "problem" << i << endl;
 			system("pause");
 		}
-		cout << "index: " << i << endl;
+		char str[10000];
+		strcpy(str, s.c_str());
 		cout << "string: " << s << endl;
 		cout << "result: " << result << endl;
 		cout << "calc:" << endl;

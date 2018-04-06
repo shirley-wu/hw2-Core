@@ -120,11 +120,13 @@
     <ClCompile Include="fraction.cpp" />
     <ClCompile Include="generator.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="node.cpp" />
     <ClCompile Include="num.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="fraction.h" />
     <ClInclude Include="generator.h" />
+    <ClInclude Include="node.h" />
     <ClInclude Include="num.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

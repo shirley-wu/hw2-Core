@@ -89,8 +89,10 @@ Num Num::randomNum(NumType t, int limit, int precision) {
 		return Num(val);
 	}
 	else {
-		int den = rand() % limit + 2;
-		int num = rand() % (den - 1) + 1;
-		return Num(num, den);
+		// int den = rand() % limit + 2;
+		// int num = rand() % (den - 1) + 1;
+		// return Num(num, den);
+		int val = rand() % limit;
+		return Num(val, 1);
 	}
 }
