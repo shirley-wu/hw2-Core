@@ -113,6 +113,11 @@ Fraction Fraction::operator^(int exp) const {
 }
 
 
+bool Fraction::operator==(const Fraction& f) const {
+	return numer == f.numer && denom == f.denom;
+}
+
+
 ostream& operator<<(ostream& os, const Fraction& f) {
 	if (f.denom == 1) {
 		os << f.numer << endl;

@@ -17,7 +17,7 @@ bool Node::calc_val() {
 	else if (type == OPR) {
 		assert(lchild != NULL);
 		assert(rchild != NULL);
-		NUMTYPE lval = lchild->get_val(), rval = rchild->get_val();
+		Num lval = lchild->get_val(), rval = rchild->get_val();
 		if (dat.opr == ADD) {
 			val = lval + rval;
 		}
@@ -29,7 +29,7 @@ bool Node::calc_val() {
 			val = lval * rval;
 		}
 		else if (dat.opr == DIV) {
-			if (rval == 0) return false;
+			if (rval == Num(0)) return false;
 			val = lval / rval;
 		}
 	}
@@ -38,7 +38,7 @@ bool Node::calc_val() {
 }
 
 
-NUMTYPE Node::get_val() {
+Num Node::get_val() {
 	// assert(calculated);
 	if(!calculated) calc_val();
 	return val;
@@ -80,7 +80,7 @@ bool to_expression(const Node * t, string& s) {
 		status = to_expression(t->lchild, child);
 		if (status == false) return false;
 		if (t->lchild->type == OPR && prior(t->lchild->dat.opr) < prior(t->dat.opr)) {
-			is << '(' << child << ')';
+			is << "(" << child << ")";
 		}
 		else is << child;
 
@@ -90,7 +90,7 @@ bool to_expression(const Node * t, string& s) {
 		else if (t->dat.opr == MUL) c = '*';
 		else if (t->dat.opr == DIV) c = '/';
 		else c = '?';
-		is << c;
+		is << ' ' << c << ' ';
 
 		status = to_expression(t->rchild, child);
 		if (status == false) return false;
@@ -99,7 +99,7 @@ bool to_expression(const Node * t, string& s) {
 		}
 		else is << child;
 	}
-	is >> s;
+	getline(is, s);
 	return true;
 }
 
@@ -112,7 +112,7 @@ Node * Generator::generate_tree(int limit, bool num_en) {
 	else type = NODETYPE(rand() % TYPENUM);
 
 	if (type == NUM) {
-		NUMTYPE val = rand() % setting.num_max;
+		Num val = Num::randomNum(setting.type);
 		p = new Node(val);
 	}
 	else {
@@ -171,7 +171,7 @@ bool Generator::generate() {
 }
 
 
-bool Generator::get_exp(int i, string& s, NUMTYPE& result) {
+bool Generator::get_exp(int i, string& s, Num& result) {
 	if (i < 0 || i >= arr.size()) return false;
 	Node * t = arr[i];
 	if (to_expression(t, s) == false) return false;

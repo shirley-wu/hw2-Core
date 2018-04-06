@@ -27,6 +27,7 @@ public:
 	Fraction operator*(const Fraction& f) const;
 	Fraction operator/(const Fraction& f) const;
 	Fraction operator^(int exp) const;
+	bool operator==(const Fraction& f) const;
 	friend std::ostream& operator<<(std::ostream& os, const Fraction& f);
 
 };

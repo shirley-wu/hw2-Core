@@ -16,16 +16,16 @@ namespace UnitTest1
 		TEST_METHOD(SingleNUM)
 		{
 			srand(time(0));
-			NUMTYPE val = rand() % 50000;
+			int val = rand() % 50000;
 			Node node1(val);
 			bool status;
 			status = node1.calc_val();
 			Assert::IsTrue(status);
-			Assert::AreEqual(val, node1.get_val());
+			Assert::IsTrue(Num(val) == node1.get_val());
 		}
 
 		TEST_METHOD(SingleADD) {
-			NUMTYPE val1, val2;
+			int val1, val2;
 			val1 = rand() % 50000;
 			val2 = rand() % 50000;
 			Node node1(ADD);
@@ -37,15 +37,11 @@ namespace UnitTest1
 			node1.set_rchild(q);
 			status = node1.calc_val();
 			Assert::IsTrue(status);
-			Assert::AreEqual(val1 + val2, node1.get_val());
+			Assert::IsTrue(Num(val1 + val2) == node1.get_val());
 		}
 
 		TEST_METHOD(SingleSUB) {
-			NUMTYPE val1, val2;
-			/*do {
-				val1 = rand() % 50000;
-				val2 = rand() % 50000;
-			} while (val1 < val2);*/
+			int val1, val2;
 			val1 = 1000;
 			val2 = 500;
 			Node node1(SUB);
@@ -57,9 +53,9 @@ namespace UnitTest1
 			node1.set_rchild(q);
 			status = node1.calc_val();
 			Assert::IsTrue(status);
-			Assert::AreEqual(val1 - val2, node1.get_val());
+			Assert::IsTrue(Num(val1 - val2) == node1.get_val());
 			delete q;
-			val2 = val1 + 2;
+			val2 = val1 + Num(2);
 			q = new Node(val2);
 			node1.set_rchild(q);
 			status = node1.calc_val();
@@ -67,7 +63,7 @@ namespace UnitTest1
 		}
 
 		TEST_METHOD(SingleMUL) {
-			NUMTYPE val1, val2;
+			int val1, val2;
 			val1 = rand() % 50000;
 			val2 = rand() % 50000;
 			Node node1(MUL);
@@ -79,11 +75,11 @@ namespace UnitTest1
 			node1.set_rchild(q);
 			status = node1.calc_val();
 			Assert::IsTrue(status);
-			Assert::AreEqual(val1 * val2, node1.get_val());
+			Assert::IsTrue(Num(val1 * val2) == node1.get_val());
 		}
 
 		TEST_METHOD(SingleDIV) {
-			NUMTYPE val1, val2;
+			int val1, val2;
 			val1 = rand() % 50000;
 			val2 = rand() % 50000 + 1;
 			Node node1(DIV);
@@ -95,7 +91,7 @@ namespace UnitTest1
 			node1.set_rchild(q);
 			status = node1.calc_val();
 			Assert::IsTrue(status);
-			Assert::AreEqual(val1 / val2, node1.get_val());
+			Assert::IsTrue(Num(val1 / val2) == node1.get_val());
 			delete q;
 			val2 = 0;
 			q = new Node(val2);
@@ -105,7 +101,7 @@ namespace UnitTest1
 		}
 
 		TEST_METHOD(Equal) {
-			NUMTYPE val1 = rand()%50000, val2 = rand()%50000, val3 = rand()%50000;
+			int val1 = rand()%50000, val2 = rand()%50000, val3 = rand()%50000;
 			Node node1(ADD), node2(ADD), node3(MUL), node4(MUL);
 			Node *p, *q;
 
