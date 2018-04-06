@@ -116,7 +116,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="calc.cpp" />
     <ClCompile Include="fraction.cpp" />
     <ClCompile Include="generator.cpp" />
     <ClCompile Include="main.cpp" />

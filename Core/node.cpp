@@ -92,7 +92,7 @@ bool to_expression(const Node * t, string& s) {
 		else if (t->dat.opr == MUL) c = '*';
 		else if (t->dat.opr == DIV) c = '/';
 		else c = '?';
-		is << c;
+		is << ' ' << c << ' ';
 
 		status = to_expression(t->rchild, child);
 		if (status == false) return false;
