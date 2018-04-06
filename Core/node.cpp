@@ -29,7 +29,7 @@ bool Node::calc_val() {
 			val = lval * rval;
 		}
 		else if (dat.opr == DIV) {
-			if (rval == Num(0)) return false;
+			if (rval == 0.0) return false;
 			val = lval / rval;
 		}
 	}

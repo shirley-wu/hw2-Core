@@ -68,6 +68,11 @@ bool Num::operator==(const Num& f) const {
 }
 
 
+bool Num::operator==(double w) const {
+	return fabs((double)(*this) - w) < EPS;
+}
+
+
 ostream& operator<<(ostream& os, const Num& n) {
 	if (n.type == INT) os << n.dat.int_val;
 	else if (n.type == DOUBLE) os << n.dat.double_val;
@@ -93,6 +98,6 @@ Num Num::randomNum(NumType t, int limit, int precision) {
 		// int num = rand() % (den - 1) + 1;
 		// return Num(num, den);
 		int val = rand() % limit;
-		return Num(val, 1);
+		return Num(Fraction(val, 1));
 	}
 }

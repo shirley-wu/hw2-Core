@@ -37,7 +37,7 @@ namespace UnitTest1
 
 		TEST_METHOD(TestFraction)
 		{
-			Num n(12, 13);
+			Num n(Fraction(12, 13));
 			stringstream ss;
 			string s;
 			ss << n;
@@ -47,7 +47,7 @@ namespace UnitTest1
 
 		TEST_METHOD(TestAdd)
 		{
-			Num n1(3), n2(1.5), n3(27, 100);
+			Num n1(3), n2(1.5), n3(Fraction(27, 100));
 			stringstream ss;
 			string s;
 			ss << n1 + n1 << ' ';
@@ -72,7 +72,7 @@ namespace UnitTest1
 
 		TEST_METHOD(TestSub)
 		{
-			Num n1(3), n2(1.5), n22(0.7), n3(27, 100), n32(13, 100);
+			Num n1(3), n2(1.5), n22(0.7), n3(Fraction(27, 100)), n32(Fraction(13, 100));
 			stringstream ss;
 			string s;
 			ss << n1 - n1 << ' ';
@@ -97,7 +97,7 @@ namespace UnitTest1
 
 		TEST_METHOD(TestMul)
 		{
-			Num n1(3), n12(7), n2(1.5), n22(0.7), n3(27, 100), n32(13, 100);
+			Num n1(3), n12(7), n2(1.5), n22(0.7), n3(Fraction(27, 100)), n32(Fraction(13, 100));
 			stringstream ss;
 			string s;
 			ss << n1 * n12 << ' ';
@@ -122,7 +122,7 @@ namespace UnitTest1
 
 		TEST_METHOD(TestDiv)
 		{
-			Num n1(3), n12(7), n2(1.5), n22(0.7), n3(27, 100), n32(13, 100);
+			Num n1(3), n12(7), n2(1.5), n22(0.7), n3(Fraction(27, 100)), n32(Fraction(13, 100));
 			stringstream ss;
 			string s;
 			ss << n1 / n12 << ' ';
