@@ -15,7 +15,7 @@ namespace UnitTest1
 		
 		TEST_METHOD(SingleNUM)
 		{
-			srand(time(0));
+			srand((unsigned)time(0));
 			int val = rand() % 50000;
 			Node node1(val);
 			bool status;
@@ -55,7 +55,7 @@ namespace UnitTest1
 			Assert::IsTrue(status);
 			Assert::IsTrue(Num(val1 - val2) == node1.get_val());
 			delete q;
-			val2 = val1 + Num(2);
+			val2 = val1 + 2;
 			q = new Node(val2);
 			node1.set_rchild(q);
 			status = node1.calc_val();

@@ -120,7 +120,7 @@ bool Fraction::operator==(const Fraction& f) const {
 
 ostream& operator<<(ostream& os, const Fraction& f) {
 	if (f.denom == 1) {
-		os << f.numer << endl;
+		os << f.numer;
 	}
 	else {
 		os << f.numer << '/' << f.denom;

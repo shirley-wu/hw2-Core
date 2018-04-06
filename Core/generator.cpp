@@ -75,7 +75,7 @@ bool Generator::generate() {
 
 
 bool Generator::get_exp(int i, string& s, Num& result) {
-	if (i < 0 || i >= arr.size()) return false;
+	if (i < 0 || (unsigned)i >= arr.size()) return false;
 	Node * t = arr[i];
 	if (to_expression(t, s) == false) return false;
 	result = t->get_val();

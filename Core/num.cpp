@@ -79,7 +79,7 @@ ostream& operator<<(ostream& os, const Num& n) {
 Num Num::randomNum(NumType t, int limit, int precision) {
 	if (t == DOUBLE) {
 		double base = pow(10, precision);
-		int real_limit = base * limit;
+		int real_limit = (int)base * limit;
 		int val = rand() % real_limit;
 		double dval = (double)val / base;
 		return Num(dval);
