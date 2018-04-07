@@ -122,12 +122,12 @@ namespace UnitTest1
 
 		TEST_METHOD(TestDiv)
 		{
-			Num n1(3), n12(7), n2(1.5), n22(0.7), n3(Fraction(27, 100)), n32(Fraction(13, 100));
+			Num n1(3), n12(6), n2(1.5), n22(0.7), n3(Fraction(27, 100)), n32(Fraction(13, 100));
 			stringstream ss;
 			string s;
-			ss << n1 / n12 << ' ';
+			ss << n12 / n1 << ' ';
 			ss >> s;
-			Assert::AreEqual(string("0"), s);
+			Assert::AreEqual(string("2"), s);
 			ss << n1 / n2 << ' ';
 			ss >> s;
 			Assert::AreEqual(string("2"), s);

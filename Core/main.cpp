@@ -10,12 +10,11 @@ using namespace std;
 
 int main() {
 	srand((unsigned)time(0));
-	set(1000, 20, 10, DOUBLE, 3);
+	string s, result;
+	set(1000, 20, 10, 0, 3);
 	generate();
 	for (int i = 0; i < 10; i++) {
-		string s;
-		Num result;
-		if (generator.get_exp(i, s, result) == false) {
+		if (get_exp(i, s, result) == false) {
 			cout << "problem" << i << endl;
 			system("pause");
 		}
@@ -23,12 +22,10 @@ int main() {
 		cout << "result: " << result << endl;
 	}
 	cout << endl;
-	generator.set(1000, 20, 10, INT);
-	generator.generate();
+	set(1000, 20, 10, 1);
+	generate();
 	for (int i = 0; i < 10; i++) {
-		string s;
-		Num result;
-		if (generator.get_exp(i, s, result) == false) {
+		if (get_exp(i, s, result) == false) {
 			cout << "problem" << i << endl;
 			system("pause");
 		}
@@ -36,12 +33,10 @@ int main() {
 		cout << "result: " << result << endl;
 	}
 	cout << endl;
-	generator.set(1000, 20, 10, FRACTION);
-	generator.generate();
+	set(1000, 20, 10, 2);
+	generate();
 	for (int i = 0; i < 10; i++) {
-		string s;
-		Num result;
-		if (generator.get_exp(i, s, result) == false) {
+		if (get_exp(i, s, result) == false) {
 			cout << "problem" << i << endl;
 			system("pause");
 		}

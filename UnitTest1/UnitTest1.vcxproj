@@ -169,11 +169,6 @@
     <ClCompile Include="testNode.cpp" />
     <ClCompile Include="testNum.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Core\Core.vcxproj">
-      <Project>{8b2c0850-5c26-43b3-a368-86dcaeba9326}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

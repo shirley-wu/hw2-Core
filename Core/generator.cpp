@@ -2,8 +2,8 @@
 #include <assert.h>
 #include <sstream>
 #include <vector>
-#include <iostream>
 
+#include "Exception.h"
 #include "node.h"
 
 #define GENERATOR_DLL_IMPLEMENT
@@ -29,11 +29,25 @@ std::vector<Node *> arr;
 Node * generate_tree(int limit, bool num_en = true);
 
 
-void set(int num_max, int num_limit, int exp_num, NumType type, int precision) {
+NumType int_to_type(int type) {
+	switch (type) {
+	case 0:
+		return DOUBLE;
+	case 1:
+		return INT;
+	case 2:
+		return FRACTION;
+	default:
+		throw(NumTypeError());
+	}
+}
+
+
+void set(int num_max, int num_limit, int exp_num, int type, int precision) {
 	setting.num_max = num_max;
 	setting.num_limit = num_limit;
 	setting.exp_num = exp_num;
-	setting.type = type;
+	setting.type = int_to_type(type);
 	setting.precision = precision;
 }
 
@@ -65,7 +79,7 @@ bool generate() {
 
 void clear() {
 	if (arr.size() > 0) {
-		for (int i = 0; i < arr.size(); i++) {
+		for (unsigned i = 0; i < arr.size(); i++) {
 			delete arr[i];
 		}
 		arr.clear();
@@ -103,19 +117,36 @@ Node * generate_tree(int limit, bool num_en) {
 			limit2 = limit - limit1;
 		}
 
+		p->set_lchild(generate_tree(limit1));
+		p->set_rchild(generate_tree(limit2));
 		while(true) {
-			Node *pl, *pr;
-			pl = generate_tree(limit1);
-			pr = generate_tree(limit2);
-			p->set_lchild(pl);
-			p->set_rchild(pr);
-
-			if (p->calc_val(setting.num_max)) break;
-			else {
-				delete pl;
-				delete pr;
-				// TODO: don't have to
+			try {
+				p->calc_val(setting.num_max);
 			}
+			catch (Overflow& e) {
+				p->set_lchild(generate_tree(limit1));
+				p->set_rchild(generate_tree(limit2));
+				continue;
+			}
+			catch (Zeroerror& e) {
+				p->set_lchild(generate_tree(limit1));
+				p->set_rchild(generate_tree(limit2));
+				continue;
+			}
+			catch (Negerror& e) {
+				p->exchange_lr();
+				continue;
+			}
+			catch (Exaerror& e) {
+				break;
+				p->set_lchild(generate_tree(limit1));
+				p->set_rchild(generate_tree(limit2));
+				continue;
+			}
+			catch (...) {
+				throw;
+			}
+			break;
 		}
 	}
 

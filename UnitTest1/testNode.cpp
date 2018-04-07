@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "../Core/generator.h"
+#include "../Core/node.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -18,9 +18,7 @@ namespace UnitTest1
 			srand((unsigned)time(0));
 			int val = rand() % 50000;
 			Node node1(val);
-			bool status;
-			status = node1.calc_val();
-			Assert::IsTrue(status);
+			node1.calc_val();
 			Assert::IsTrue(Num(val) == node1.get_val());
 		}
 
@@ -30,13 +28,11 @@ namespace UnitTest1
 			val2 = rand() % 50000;
 			Node node1(ADD);
 			Node *p, *q;
-			bool status;
 			p = new Node(val1);
 			node1.set_lchild(p);
 			q = new Node(val2);
 			node1.set_rchild(q);
-			status = node1.calc_val();
-			Assert::IsTrue(status);
+			node1.calc_val();
 			Assert::IsTrue(Num(val1 + val2) == node1.get_val());
 		}
 
@@ -46,20 +42,12 @@ namespace UnitTest1
 			val2 = 500;
 			Node node1(SUB);
 			Node *p, *q;
-			bool status;
 			p = new Node(val1);
 			node1.set_lchild(p);
 			q = new Node(val2);
 			node1.set_rchild(q);
-			status = node1.calc_val();
-			Assert::IsTrue(status);
+			node1.calc_val();
 			Assert::IsTrue(Num(val1 - val2) == node1.get_val());
-			delete q;
-			val2 = val1 + 2;
-			q = new Node(val2);
-			node1.set_rchild(q);
-			status = node1.calc_val();
-			Assert::IsFalse(status);
 		}
 
 		TEST_METHOD(SingleMUL) {
@@ -68,36 +56,26 @@ namespace UnitTest1
 			val2 = rand() % 50000;
 			Node node1(MUL);
 			Node *p, *q;
-			bool status;
 			p = new Node(val1);
 			node1.set_lchild(p);
 			q = new Node(val2);
 			node1.set_rchild(q);
-			status = node1.calc_val();
-			Assert::IsTrue(status);
+			node1.calc_val();
 			Assert::IsTrue(Num(val1 * val2) == node1.get_val());
 		}
 
 		TEST_METHOD(SingleDIV) {
 			int val1, val2;
 			val1 = rand() % 50000;
-			val2 = rand() % 50000 + 1;
+			val2 = val1 * 2;
 			Node node1(DIV);
 			Node *p, *q;
-			bool status;
-			p = new Node(val1);
+			p = new Node(val2);
 			node1.set_lchild(p);
-			q = new Node(val2);
+			q = new Node(val1);
 			node1.set_rchild(q);
-			status = node1.calc_val();
-			Assert::IsTrue(status);
-			Assert::IsTrue(Num(val1 / val2) == node1.get_val());
-			delete q;
-			val2 = 0;
-			q = new Node(val2);
-			node1.set_rchild(q);
-			status = node1.calc_val();
-			Assert::IsFalse(status);
+			node1.calc_val();
+			Assert::IsTrue(Num(2) == node1.get_val());
 		}
 
 		TEST_METHOD(Equal) {

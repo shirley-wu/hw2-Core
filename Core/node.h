@@ -36,10 +36,22 @@ public:
 		if(rchild) delete rchild;
 	}
 
-	void set_lchild(Node * p) { lchild = p; calculated = false; }
-	void set_rchild(Node * p) { rchild = p; calculated = false; }
+	void set_lchild(Node * p) {
+		if (lchild != NULL) delete lchild;
+		lchild = p; calculated = false;
+	}
+	void set_rchild(Node * p) {
+		if (rchild != NULL) delete rchild;
+		rchild = p; calculated = false;
+	}
+	void exchange_lr() {
+		Node * tmp;
+		tmp = lchild;
+		lchild = rchild;
+		rchild = tmp;
+	}
 
-	bool calc_val(double limit = -1);
+	void calc_val(double limit = -1);
 	Num get_val();
 
 	friend bool equal(const Node * t1, const Node * t2);

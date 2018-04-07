@@ -1,14 +1,15 @@
 #include <iostream>
 #include <assert.h>
 #include <sstream>
+#include "Exception.h"
 
 #include "node.h"
 
 using namespace std;
 
 
-bool Node::calc_val(double limit) {
-	if (calculated) return true;
+void Node::calc_val(double limit) {
+	if (calculated) return ;
 	if (type == NUM) {
 		assert(lchild == NULL);
 		assert(rchild == NULL);
@@ -22,21 +23,20 @@ bool Node::calc_val(double limit) {
 			fval = lval + rval;
 		}
 		else if (dat.opr == SUB) {
-			if (lval < rval) return false;
 			fval = lval - rval;
 		}
 		else if (dat.opr == MUL) {
 			fval = lval * rval;
 		}
 		else if (dat.opr == DIV) {
-			if (rval == 0.0) return false;
 			fval = lval / rval;
 		}
-		if (limit > 0 && fval > limit) return false;
+		if (limit > 0 && fval > limit) {
+			throw(Overflow());
+		}
 		val = fval;
 	}
 	calculated = true;
-	return true;
 }
 
 
