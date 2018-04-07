@@ -43,6 +43,7 @@ public:
 	Num get_val();
 
 	friend bool equal(const Node * t1, const Node * t2);
-	friend bool to_expression(const Node * p, std::string& s);
+	friend bool to_expression(Node * p, std::string& s);
+	friend bool to_answer(Node * p, std::string& s, std::string& result);
 
 } ;

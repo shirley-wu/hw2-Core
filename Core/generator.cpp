@@ -13,15 +13,13 @@ using namespace std;
 
 
 typedef struct Setting {
+
 	int num_max = 1000;
 	int num_limit = 20;
 	int exp_num = 5;
 	NumType type = DOUBLE;
 	int precision = 2;
 
-	void set(int mv, int lv, int ev, NumType tv, int pv) {
-		num_max = mv; num_limit = lv; exp_num = ev; type = tv; precision = pv;
-	}
 } Setting;
 
 
@@ -32,7 +30,11 @@ Node * generate_tree(int limit, bool num_en = true);
 
 
 void set(int num_max, int num_limit, int exp_num, NumType type, int precision) {
-	setting.set(num_max, num_limit, exp_num, type, precision);
+	setting.num_max = num_max;
+	setting.num_limit = num_limit;
+	setting.exp_num = exp_num;
+	setting.type = type;
+	setting.precision = precision;
 }
 
 
@@ -71,14 +73,10 @@ void clear() {
 }
 
 
-bool get_exp(int i, string& s, Num& result) {
+bool get_exp(int i, string& s, string& result) {
 	if (i < 0 || (unsigned)i >= arr.size()) return false;
 	Node * t = arr[i];
-	if (to_expression(t, s) == false) return false;
-	result = t->get_val();
-	if (result < 0.0) {
-		cin.get();
-	}
+	if (to_answer(t, s, result) == false) return false;
 	return true;
 }
 

@@ -15,28 +15,37 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    <ClCompile Include="generator.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="num.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="fraction.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="node.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="testNode.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="testGenerator.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="testFraction.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="testNum.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+    <ClInclude Include="generator.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="num.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="fraction.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="node.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,8 +3,6 @@
 #include <ctime>
 #include <string>
 
-#define CORE_DLL_IMPLEMENT
-
 #include "generator.h"
 
 using namespace std;
@@ -12,9 +10,8 @@ using namespace std;
 
 int main() {
 	srand((unsigned)time(0));
-	Generator generator;
-	generator.set(1000, 20, 10, DOUBLE, 3);
-	generator.generate();
+	set(1000, 20, 10, DOUBLE, 3);
+	generate();
 	for (int i = 0; i < 10; i++) {
 		string s;
 		Num result;

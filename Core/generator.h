@@ -12,4 +12,4 @@
 GENERATOR_DLL_API void set(int num_max, int num_limit, int exp_num, NumType type = DOUBLE, int precision = 2);
 GENERATOR_DLL_API bool generate();
 GENERATOR_DLL_API void clear();
-GENERATOR_DLL_API bool get_exp(int i, std::string& s, string& result);
+GENERATOR_DLL_API bool get_exp(int i, std::string& s, std::string& result);

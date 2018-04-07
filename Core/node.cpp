@@ -70,7 +70,7 @@ int prior(OPRTYPE type) {
 }
 
 
-bool to_expression(const Node * t, string& s) {
+bool to_expression(Node * t, string& s) {
 	stringstream is;
 	if (t->type == NUM) {
 		is << t->dat.num;
@@ -102,5 +102,18 @@ bool to_expression(const Node * t, string& s) {
 		else is << child;
 	}
 	getline(is, s);
+	return true;
+}
+
+
+bool to_answer(Node * p, string& s, string& result) {
+	bool status;
+	status = to_expression(p, s);
+	if (status == false) return false;
+	
+	stringstream ir;
+	ir << p->get_val();
+	getline(ir, result);
+	
 	return true;
 }
