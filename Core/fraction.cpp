@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-
+#include "Exception.h"
 #include "fraction.h"
 
 using namespace std;
@@ -32,8 +32,9 @@ long long lcm(long long a, long long b) {
 Fraction::operator double() const {
 	if (denom != 0) return (double)numer / denom;
 	else {
-		cout << "problem!" << endl;
-		return 0;
+		/*cout << "problem!" << endl;
+		return 0;*/
+		throw(Zeroerror());
 	}
 }
 
@@ -45,6 +46,12 @@ Fraction Fraction::operator+(const Fraction& f) const {
 	nv = dv / denom * numer + dv / f.denom * f.numer;
 
 	if (nv == 0) dv = 1;
+	else if (nv < 0 || dv < 0) {
+		throw(Overflow());
+	}
+	else if (dv == 0) {
+		throw(Zeroerror());
+	}
 	else {
 		long long g = gcd(nv, dv);
 		nv /= g;
@@ -62,6 +69,12 @@ Fraction Fraction::operator-(const Fraction& f) const {
 	nv = dv / denom * numer - dv / f.denom * f.numer;
 
 	if (nv == 0) dv = 1;
+	else if (nv < 0) {
+		throw(Negerror());
+	}
+	else if (dv == 0) {
+		throw(Zeroerror());
+	}
 	else {
 		long long g = gcd(nv, dv);
 		nv /= g;
@@ -79,6 +92,12 @@ Fraction Fraction::operator*(const Fraction& f) const {
 	nv = numer * f.numer;
 
 	if (nv == 0) dv = 1;
+	else if (nv < 0 || dv < 0) {
+		throw(Overflow());
+	}
+	else if (dv == 0) {
+		throw(Zeroerror());
+	}
 	else {
 		long long g = gcd(nv, dv);
 		nv /= g;
@@ -96,6 +115,12 @@ Fraction Fraction::operator/(const Fraction& f) const {
 	nv = numer * f.denom;
 
 	if (nv == 0) dv = 1;
+	else if (dv == 0) {
+		throw(Zeroerror());
+	}
+	else if (nv < 0 || dv < 0) {
+		throw(Overflow());
+	}
 	else {
 		long long g = gcd(nv, dv);
 		nv /= g;
@@ -109,7 +134,10 @@ Fraction Fraction::operator/(const Fraction& f) const {
 Fraction Fraction::operator^(int exp) const {
 	int nv = (int)pow(numer, exp);
 	int dv = (int)pow(denom, exp);
-	return Fraction(nv, dv);
+    if (nv < 0 || dv < 0) {
+		throw(Overflow());
+	}
+	else return Fraction(nv, dv);
 }
 
 

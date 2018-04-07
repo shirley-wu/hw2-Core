@@ -1,9 +1,11 @@
 #include <iostream>
 #include <cmath>
-
+#include "Exception.h"
 #include "num.h"
+#include "node.h"
 
 using namespace std;
+
 
 
 Num::operator double() const {
@@ -15,45 +17,90 @@ Num::operator double() const {
 
 Num Num::operator+(const Num& f) const {
 	if (type != f.type || type == DOUBLE) {
-		return Num((double)(*this) + (double)f);
+		if (Num((double)(*this) + (double)f) < 0) {
+			throw(Overflow());
+		}
+		else return Num((double)(*this) + (double)f);
 	}
-	else if (type == INT){
-		return Num(dat.int_val + f.dat.int_val);
+	else if (type == INT) {
+		if (Num(dat.int_val + f.dat.int_val)<0) {
+			throw(Overflow());
+		}
+		else return Num(dat.int_val + f.dat.int_val);
 	}
-	else return Num(dat.f_val + f.dat.f_val);
+	else {
+		if (Num(dat.f_val + f.dat.f_val)<0) {
+			throw(Overflow());
+		}
+		else return Num(dat.f_val + f.dat.f_val);
+	}
 }
 
 
 Num Num::operator-(const Num& f) const {
 	if (type != f.type || type == DOUBLE) {
-		return Num((double)(*this) - (double)f);
+		if (Num((double)(*this) - (double)f) < 0) {
+			throw(Negerror());
+		}
+		else return Num((double)(*this) - (double)f);
 	}
 	else if (type == INT) {
-		return Num(dat.int_val - f.dat.int_val);
+		if (Num(dat.int_val - f.dat.int_val) < 0) {
+			throw(Negerror());
+		}
+		else return Num(dat.int_val - f.dat.int_val);
 	}
-	else return Num(dat.f_val - f.dat.f_val);
+	else {
+		if (Num(dat.f_val - f.dat.f_val) < 0) {
+			throw(Negerror());
+		}
+		else return Num(dat.f_val - f.dat.f_val);
+	}
 }
 
 
 Num Num::operator*(const Num& f) const {
 	if (type != f.type || type == DOUBLE) {
-		return Num((double)(*this) * (double)f);
+		if (Num((double)(*this) * (double)f) < 0) {
+			throw(Overflow());
+		}
+		else return Num((double)(*this) * (double)f);
 	}
 	else if (type == INT) {
-		return Num(dat.int_val * f.dat.int_val);
+		if (Num(dat.int_val * f.dat.int_val) < 0) {
+			throw(Overflow());
+		}
+		else return Num(dat.int_val * f.dat.int_val);
 	}
-	else return Num(dat.f_val * f.dat.f_val);
+	else {
+		if (Num(dat.f_val * f.dat.f_val) < 0) {
+			throw(Overflow());
+		}
+		else return Num(dat.f_val * f.dat.f_val);
+	}
 }
 
 
 Num Num::operator/(const Num& f) const {
 	if (type != f.type || type == DOUBLE) {
-		return Num((double)(*this) / (double)f);
+		if ((double)f == 0) {
+			throw(Zeroerror());
+		}
+		else return Num((double)(*this) / (double)f);
 	}
 	else if (type == INT) {
-		return Num(dat.int_val / f.dat.int_val);
+		if (f.dat.int_val == 0) { 
+			throw(Zeroerror()); 
+		}
+		else if (dat.int_val%f.dat.int_val != 0) {
+			throw(Exaerror());
+		}
+		else return Num(dat.int_val / f.dat.int_val);
 	}
-	else return Num(dat.f_val / f.dat.f_val);
+	else {
+		if ((double)f.dat.f_val == 0) { throw(Zeroerror()); }
+		else return Num(dat.f_val / f.dat.f_val);
+	}
 }
 
 

@@ -123,6 +123,7 @@
     <ClCompile Include="num.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Exception.h" />
     <ClInclude Include="fraction.h" />
     <ClInclude Include="generator.h" />
     <ClInclude Include="node.h" />
