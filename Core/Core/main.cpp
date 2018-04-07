@@ -3,6 +3,8 @@
 #include <ctime>
 #include <string>
 
+#define CORE_DLL_IMPLEMENT
+
 #include "generator.h"
 
 using namespace std;
