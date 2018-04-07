@@ -25,7 +25,7 @@ private:
 public:
 	operator double() const;
 
-	static Num randomNum(NumType t = DOUBLE, int limit = 100, int precision = 2);
+	static Num randomNum(NumType t = DOUBLE, double limit = 100, int precision = 2);
 
 	Num() { type = DOUBLE; dat.double_val = 0; }
 	Num(double v) { type = DOUBLE; dat.double_val = v; }

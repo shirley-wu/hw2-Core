@@ -128,23 +128,25 @@ ostream& operator<<(ostream& os, const Num& n) {
 }
 
 
-Num Num::randomNum(NumType t, int limit, int precision) {
+Num Num::randomNum(NumType t, double limit, int precision) {
 	if (t == DOUBLE) {
 		double base = pow(10, precision);
-		int real_limit = (int)base * limit;
+		int real_limit = base * limit;
 		int val = rand() % real_limit;
 		double dval = (double)val / base;
 		return Num(dval);
 	}
 	else if (t == INT) {
-		int val = rand() % limit;
+		int l = (int)limit;
+		int val = rand() % l;
 		return Num(val);
 	}
 	else {
 		// int den = rand() % limit + 2;
 		// int num = rand() % (den - 1) + 1;
 		// return Num(num, den);
-		int val = rand() % limit;
+		int l = (int)limit;
+		int val = rand() % l;
 		return Num(Fraction(val, 1));
 	}
 }

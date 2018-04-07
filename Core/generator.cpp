@@ -26,7 +26,7 @@ typedef struct Setting {
 Setting setting;
 std::vector<Node *> arr;
 
-Node * generate_tree(int limit, bool num_en = true);
+Node * generate_tree(int limit, bool root, Num val);
 
 
 NumType int_to_type(int type) {
@@ -55,7 +55,7 @@ void set(int num_max, int num_limit, int exp_num, int type, int precision) {
 bool generate() {
 	clear();
 	for (int i = 0; i < setting.exp_num; i++) {
-		Node * p = generate_tree(setting.num_limit, false);
+		Node * p = generate_tree(setting.num_limit, true, Num());
 		bool unique;
 		while (1) {
 			unique = true;
@@ -68,7 +68,7 @@ bool generate() {
 			if (unique) break;
 			else {
 				delete p;
-				p = generate_tree(setting.num_limit);
+				p = generate_tree(setting.num_limit, true, Num());
 			}
 		}
 		arr.push_back(p);
@@ -95,71 +95,79 @@ bool get_exp(int i, string& s, string& result) {
 }
 
 
-Node * generate_tree(int limit, bool num_en) {
+Node * generate_tree(int limit, bool root, Num val) {
 	Node * p;
 	NODETYPE type;
-	if (limit == 1) type = NUM;
-	else if (num_en == false) type = OPR;
+	if (root == true) {
+		type = OPR;
+		if (setting.type == INT) {
+			val = Num(limit);
+		}
+		else if (setting.type == DOUBLE) {
+			val = Num((double)limit);
+		}
+		else {
+			val = Num(Fraction(limit));
+		}
+	}
+	else if (limit == 1) type = NUM;
 	else type = NODETYPE(rand() % TYPENUM);
 
 	if (type == NUM) {
-		Num val = Num::randomNum(setting.type, setting.num_max, setting.precision);
 		p = new Node(val);
 	}
 	else {
 		OPRTYPE opr = OPRTYPE(rand() % OPRNUM);
 		p = new Node(opr);
 
-		if (setting.type == INT && opr == DIV) {
-			int denom = rand() % (setting.num_max - 1) + 1;
-			int numer = (rand() % (setting.num_max / denom) + 1) * denom;
-			Node *pl = new Node(Num(numer));
-			Node *pr = new Node(Num(denom));
-			p->set_lchild(pl);
-			p->set_rchild(pr);
-			p->calc_val(setting.num_max);
-		}
+		int limit1, limit2;
+		if (limit == 2) limit1 = limit2 = 1;
 		else {
-			int limit1, limit2;
-			if (limit == 2) limit1 = limit2 = 1;
-			else {
-				limit1 = (rand() % (limit - 2)) + 1;
-				limit2 = limit - limit1;
-			}
-
-			p->set_lchild(generate_tree(limit1));
-			p->set_rchild(generate_tree(limit2));
-			
-			while (true) {
-				try {
-					p->calc_val(setting.num_max);
-				}
-				catch (Overflow& e) {
-					p->set_lchild(generate_tree(limit1));
-					p->set_rchild(generate_tree(limit2));
-					continue;
-				}
-				catch (Zeroerror& e) {
-					p->set_lchild(generate_tree(limit1));
-					p->set_rchild(generate_tree(limit2));
-					continue;
-				}
-				catch (Negerror& e) {
-					p->exchange_lr();
-					continue;
-				}
-				catch (Exaerror& e) {
-					p->set_lchild(generate_tree(limit1));
-					p->set_rchild(generate_tree(limit2));
-					continue;
-				}
-				catch (...) {
-					throw;
-				}
-				break;
-			}
+			limit1 = (rand() % (limit - 2)) + 1;
+			limit2 = limit - limit1;
 		}
 
+		while (true) {
+			try {
+				if (opr == ADD) {
+					Num vl = Num::randomNum(setting.type, (double)val, setting.precision);
+					Num vr = val - vl;
+					p->set_lchild(generate_tree(limit1, false, vl));
+					p->set_rchild(generate_tree(limit2, false, vr));
+				}
+				else if (opr == SUB) {
+					Num vl = Num::randomNum(setting.type, (double)val, setting.precision);
+					Num vr = Num::randomNum(setting.type, (double)vl, setting.precision);
+					p->set_lchild(generate_tree(limit1, false, vl));
+					p->set_rchild(generate_tree(limit2, false, vr));
+				}
+				else if (opr == MUL) {
+					Num vl = Num::randomNum(setting.type, (double)val, setting.precision);
+					Num vr = val / vl;
+					p->set_lchild(generate_tree(limit1, false, vl));
+					p->set_rchild(generate_tree(limit2, false, vr));
+				}
+				else if (opr == DIV) {
+					if (setting.type == INT) {
+						int denom = rand() % (setting.num_max - 1) + 1;
+						int numer = (rand() % (setting.num_max / denom) + 1) * denom;
+						p->set_lchild(generate_tree(limit1, false, Num(numer)));
+						p->set_rchild(generate_tree(limit1, false, Num(denom)));
+					}
+					else {
+						Num vl = Num::randomNum(setting.type, (double)val, setting.precision);
+						Num vr = Num::randomNum(setting.type, (double)val, setting.precision);
+						p->set_lchild(generate_tree(limit1, false, vl));
+						p->set_rchild(generate_tree(limit2, false, vr));
+					}
+				}
+				p->calc_val(setting.num_max);
+			}
+			catch (...) {
+				throw;
+			}
+			break;
+		}
 	}
 
 	return p;
