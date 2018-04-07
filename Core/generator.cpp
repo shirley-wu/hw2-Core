@@ -110,44 +110,56 @@ Node * generate_tree(int limit, bool num_en) {
 		OPRTYPE opr = OPRTYPE(rand() % OPRNUM);
 		p = new Node(opr);
 
-		int limit1, limit2;
-		if (limit == 2) limit1 = limit2 = 1;
+		if (setting.type == INT && opr == DIV) {
+			int denom = rand() % (setting.num_max - 1) + 1;
+			int numer = (rand() % (setting.num_max / denom) + 1) * denom;
+			Node *pl = new Node(Num(numer));
+			Node *pr = new Node(Num(denom));
+			p->set_lchild(pl);
+			p->set_rchild(pr);
+			p->calc_val(setting.num_max);
+		}
 		else {
-			limit1 = (rand() % (limit - 2)) + 1;
-			limit2 = limit - limit1;
+			int limit1, limit2;
+			if (limit == 2) limit1 = limit2 = 1;
+			else {
+				limit1 = (rand() % (limit - 2)) + 1;
+				limit2 = limit - limit1;
+			}
+
+			p->set_lchild(generate_tree(limit1));
+			p->set_rchild(generate_tree(limit2));
+			
+			while (true) {
+				try {
+					p->calc_val(setting.num_max);
+				}
+				catch (Overflow& e) {
+					p->set_lchild(generate_tree(limit1));
+					p->set_rchild(generate_tree(limit2));
+					continue;
+				}
+				catch (Zeroerror& e) {
+					p->set_lchild(generate_tree(limit1));
+					p->set_rchild(generate_tree(limit2));
+					continue;
+				}
+				catch (Negerror& e) {
+					p->exchange_lr();
+					continue;
+				}
+				catch (Exaerror& e) {
+					p->set_lchild(generate_tree(limit1));
+					p->set_rchild(generate_tree(limit2));
+					continue;
+				}
+				catch (...) {
+					throw;
+				}
+				break;
+			}
 		}
 
-		p->set_lchild(generate_tree(limit1));
-		p->set_rchild(generate_tree(limit2));
-		while(true) {
-			try {
-				p->calc_val(setting.num_max);
-			}
-			catch (Overflow& e) {
-				p->set_lchild(generate_tree(limit1));
-				p->set_rchild(generate_tree(limit2));
-				continue;
-			}
-			catch (Zeroerror& e) {
-				p->set_lchild(generate_tree(limit1));
-				p->set_rchild(generate_tree(limit2));
-				continue;
-			}
-			catch (Negerror& e) {
-				p->exchange_lr();
-				continue;
-			}
-			catch (Exaerror& e) {
-				break;
-				p->set_lchild(generate_tree(limit1));
-				p->set_rchild(generate_tree(limit2));
-				continue;
-			}
-			catch (...) {
-				throw;
-			}
-			break;
-		}
 	}
 
 	return p;

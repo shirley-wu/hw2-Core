@@ -92,9 +92,9 @@ Num Num::operator/(const Num& f) const {
 		if (f.dat.int_val == 0) { 
 			throw(Zeroerror()); 
 		}
-		else if (dat.int_val%f.dat.int_val != 0) {
-			throw(Exaerror());
-		}
+		// else if (dat.int_val%f.dat.int_val != 0) {
+		// 	throw(Exaerror());
+		// }
 		else return Num(dat.int_val / f.dat.int_val);
 	}
 	else {
