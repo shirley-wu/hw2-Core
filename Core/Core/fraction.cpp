@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
-#include "Exception.h"
+
+#include "exception.h"
 #include "fraction.h"
 
 using namespace std;
@@ -29,115 +30,76 @@ long long lcm(long long a, long long b) {
 }
 
 
-Fraction::operator double() const {
-	if (denom != 0) return (double)numer / denom;
+void Fraction::adjust() {
+	if (numer == 0) denom = 1;
 	else {
-		/*cout << "problem!" << endl;
-		return 0;*/
-		throw(Zeroerror());
+		long long g = gcd(numer, denom);
+		numer /= g;
+		denom /= g;
 	}
 }
 
 
-Fraction Fraction::operator+(const Fraction& f) const {
+void add(const Fraction& f1, const Fraction& f2, Fraction& f) {
 	// TODO: can be quicker
-	long long nv, dv;
-	dv = lcm(denom, f.denom);
-	nv = dv / denom * numer + dv / f.denom * f.numer;
+	f.denom = lcm(f1.denom, f2.denom);
+	if (f.denom < 0) throw(Overflow());
+	else if (f.denom == 0) throw(Zeroerror());
 
-	if (nv == 0) dv = 1;
-	else if (nv < 0 || dv < 0) {
-		throw(Overflow());
-	}
-	else if (dv == 0) {
-		throw(Zeroerror());
-	}
-	else {
-		long long g = gcd(nv, dv);
-		nv /= g;
-		dv /= g;
-	}
+	f.numer = f.denom / f1.denom * f1.numer + f.denom / f2.denom * f2.numer;
+	if (f.numer < 0) throw(Overflow());
 
-	return Fraction(nv, dv);
+	f.adjust();
 }
 
 
-Fraction Fraction::operator-(const Fraction& f) const {
+void sub(const Fraction& f1, const Fraction& f2, Fraction& f) {
 	// TODO: can be quicker
-	long long nv, dv;
-	dv = lcm(denom, f.denom);
-	nv = dv / denom * numer - dv / f.denom * f.numer;
+	f.denom = lcm(f1.denom, f2.denom);
+	if (f.denom < 0) throw(Overflow());
+	else if (f.denom == 0) throw(Zeroerror());
 
-	if (nv == 0) dv = 1;
-	else if (nv < 0) {
-		throw(Negerror());
-	}
-	else if (dv == 0) {
-		throw(Zeroerror());
-	}
-	else {
-		long long g = gcd(nv, dv);
-		nv /= g;
-		dv /= g;
-	}
+	f.numer = f.denom / f1.denom * f1.numer - f.denom / f2.denom * f2.numer;
+	if(f.numer < 0) throw(Negerror());
 
-	return Fraction(nv, dv);
+	f.adjust();
 }
 
 
-Fraction Fraction::operator*(const Fraction& f) const {
+void mul(const Fraction& f1, const Fraction& f2, Fraction& f) {
 	// TODO: can be quicker
-	long long nv, dv;
-	dv = denom * f.denom;
-	nv = numer * f.numer;
+	f.denom = f1.denom * f2.denom;
+	if (f.denom < 0) throw(Overflow());
+	else if (f.denom == 0) throw(Zeroerror());
 
-	if (nv == 0) dv = 1;
-	else if (nv < 0 || dv < 0) {
-		throw(Overflow());
-	}
-	else if (dv == 0) {
-		throw(Zeroerror());
-	}
-	else {
-		long long g = gcd(nv, dv);
-		nv /= g;
-		dv /= g;
-	}
+	f.numer = f1.numer * f2.numer;
+	if (f.numer < 0) throw(Overflow());
 
-	return Fraction(nv, dv);
+	f.adjust();
 }
 
 
-Fraction Fraction::operator/(const Fraction& f) const {
+void div(const Fraction& f1, const Fraction& f2, Fraction& f) {
 	// TODO: can be quicker
-	long long nv, dv;
-	dv = denom * f.numer;
-	nv = numer * f.denom;
+	f.denom = f1.denom * f2.numer;
+	if (f.denom < 0) throw(Overflow());
+	else if (f.denom == 0) throw(Zeroerror());
 
-	if (nv == 0) dv = 1;
-	else if (dv == 0) {
-		throw(Zeroerror());
-	}
-	else if (nv < 0 || dv < 0) {
-		throw(Overflow());
-	}
-	else {
-		long long g = gcd(nv, dv);
-		nv /= g;
-		dv /= g;
-	}
+	f.numer = f1.numer * f2.denom;
+	if (f.numer < 0) throw(Overflow());
 
-	return Fraction(nv, dv);
+	f.adjust();
 }
 
 
-Fraction Fraction::operator^(int exp) const {
-	int nv = (int)pow(numer, exp);
-	int dv = (int)pow(denom, exp);
-    if (nv < 0 || dv < 0) {
-		throw(Overflow());
-	}
-	else return Fraction(nv, dv);
+void pow(const Fraction& f1, int p, Fraction& f) {
+	f.numer = (long long)pow(f1.numer, p);
+	if (f.numer < 0) throw(Overflow());
+
+	f.denom = (long long)pow(f1.denom, p);
+	if (f.denom < 0) throw(Overflow());
+
+    f.adjust();
 }
 
 

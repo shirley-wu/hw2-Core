@@ -3,38 +3,53 @@
 #include <string>
 #include <vector>
 
-#include "num.h"
+#include "setting.h"
+#include "fraction.h"
 
-
-
-typedef enum { NUM, OPR } NODETYPE;
-const int TYPENUM = 2;
-
-typedef enum { ADD, SUB, MUL, DIV } OPRTYPE;
-const int OPRNUM = 4;
 
 
 class Node {
 
 private:
-	NODETYPE type;
-	union node_dat {
-		Num num;
-		OPRTYPE opr;
-		node_dat() { }
-	} dat;
-	Num val = 0;
+	NODETYPE nodetype;
+
+	OPRTYPE opr;
+
+	NumType numtype;
+	int ival;
+	double dval;
+	Fraction fval;
+
 	bool calculated = false;
 	Node * lchild = NULL;
 	Node * rchild = NULL;
 
 public:
-	Node(Num num) { type = NUM; dat.num = num; }
-	Node(OPRTYPE opr) { type = OPR; dat.opr = opr; }
+	Node(int v) {
+		nodetype = NUM;
+		numtype = INT;
+		ival = v;
+	}
+	Node(double v) {
+		nodetype = NUM;
+		numtype = DOUBLE;
+		dval = v;
+	}
+	Node(Fraction f) {
+		nodetype = NUM;
+		numtype = FRACTION;
+		fval = f;
+	}
+	Node(OPRTYPE ov) {
+		nodetype = OPR;
+		opr = ov;
+	}
 	~Node() {
 		if(lchild) delete lchild;
 		if(rchild) delete rchild;
 	}
+
+	static Node * randNum(NumType type, int num_max);
 
 	void set_lchild(Node * p) {
 		if (lchild != NULL) delete lchild;
@@ -51,11 +66,11 @@ public:
 		rchild = tmp;
 	}
 
-	void calc_val(double limit = -1);
-	Num get_val();
+	void calc_val();
 
 	friend bool equal(const Node * t1, const Node * t2);
-	friend bool to_expression(Node * p, std::string& s);
-	friend bool to_answer(Node * p, std::string& s, std::string& result);
+
+	friend void to_expression(Node * p, std::string& s);
+	friend void to_answer(Node * p, std::string& s);
 
 } ;

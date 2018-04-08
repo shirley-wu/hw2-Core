@@ -3,8 +3,9 @@
 #include <sstream>
 #include <vector>
 
-#include "Exception.h"
+#include "exception.h"
 #include "node.h"
+#include "setting.h"
 
 #define GENERATOR_DLL_IMPLEMENT
 #include "generator.h"
@@ -12,21 +13,11 @@
 using namespace std;
 
 
-typedef struct Setting {
-
-	int num_max = 1000;
-	int num_limit = 20;
-	int exp_num = 5;
-	NumType type = DOUBLE;
-	int precision = 2;
-
-} Setting;
-
-
-Setting setting;
 std::vector<Node *> arr;
+Setting setting;
 
-Node * generate_tree(int limit, bool num_en = true);
+
+Node * generate_tree(NumType t, int limit, int num_max, bool num_en = true);
 
 
 NumType int_to_type(int type) {
@@ -52,10 +43,10 @@ void set(int num_max, int num_limit, int exp_num, int type, int precision) {
 }
 
 
-bool generate() {
+void generate() {
 	clear();
 	for (int i = 0; i < setting.exp_num; i++) {
-		Node * p = generate_tree(setting.num_limit, false);
+		Node * p = generate_tree(setting.type, setting.num_limit, false);
 		bool unique;
 		while (1) {
 			unique = true;
@@ -68,12 +59,11 @@ bool generate() {
 			if (unique) break;
 			else {
 				delete p;
-				p = generate_tree(setting.num_limit);
+				p = generate_tree(setting.type, setting.num_limit, false);
 			}
 		}
 		arr.push_back(p);
 	}
-	return true;
 }
 
 
@@ -89,13 +79,15 @@ void clear() {
 
 bool get_exp(int i, string& s, string& result) {
 	if (i < 0 || (unsigned)i >= arr.size()) return false;
+	
 	Node * t = arr[i];
-	if (to_answer(t, s, result) == false) return false;
+	to_expression(t, s);
+	to_expression(t, result);
 	return true;
 }
 
 
-Node * generate_tree(int limit, bool num_en) {
+Node * generate_tree(NumType t, int limit, int num_max, bool num_en) {
 	Node * p;
 	NODETYPE type;
 	if (limit == 1) type = NUM;
@@ -103,8 +95,7 @@ Node * generate_tree(int limit, bool num_en) {
 	else type = NODETYPE(rand() % TYPENUM);
 
 	if (type == NUM) {
-		Num val = Num::randomNum(setting.type, setting.num_max, setting.precision);
-		p = new Node(val);
+		p = Node::randNum(t, setting.num_max);
 	}
 	else {
 		OPRTYPE opr = OPRTYPE(rand() % OPRNUM);
@@ -113,11 +104,11 @@ Node * generate_tree(int limit, bool num_en) {
 		if (setting.type == INT && opr == DIV) {
 			int denom = rand() % (setting.num_max - 1) + 1;
 			int numer = (rand() % (setting.num_max / denom) + 1) * denom;
-			Node *pl = new Node(Num(numer));
-			Node *pr = new Node(Num(denom));
+			Node *pl = new Node(numer);
+			Node *pr = new Node(denom);
 			p->set_lchild(pl);
 			p->set_rchild(pr);
-			p->calc_val(setting.num_max);
+			p->calc_val();
 		}
 		else {
 			int limit1, limit2;
@@ -127,36 +118,58 @@ Node * generate_tree(int limit, bool num_en) {
 				limit2 = limit - limit1;
 			}
 
-			p->set_lchild(generate_tree(limit1));
-			p->set_rchild(generate_tree(limit2));
-			
-			while (true) {
-				try {
-					p->calc_val(setting.num_max);
+			if (opr == POW) {
+				int v = rand() % setting.num_max;
+				p->set_lchild(generate_tree(t, limit1, setting.num_max));
+				p->set_rchild(generate_tree(INT, limit2, v));
+
+				while (true) {
+					try {
+						p->calc_val();
+					}
+					catch (Overflow& e) {
+						v /= 2;
+						p->set_rchild(generate_tree(INT, limit2, v));
+						continue;
+					}
+					catch (...) {
+						throw;
+					}
+					break;
 				}
-				catch (Overflow& e) {
-					p->set_lchild(generate_tree(limit1));
-					p->set_rchild(generate_tree(limit2));
-					continue;
+			}
+			else {
+				p->set_lchild(generate_tree(t, limit1, setting.num_max));
+				p->set_rchild(generate_tree(t, limit2, setting.num_max));
+
+				while (true) {
+					try {
+						p->calc_val();
+					}
+					catch (Overflow& e) {
+						p->set_lchild(generate_tree(t, limit1, setting.num_max));
+						p->set_rchild(generate_tree(t, limit2, setting.num_max));
+						continue;
+					}
+					catch (Zeroerror& e) {
+						p->set_lchild(generate_tree(t, limit1, setting.num_max));
+						p->set_rchild(generate_tree(t, limit2, setting.num_max));
+						continue;
+					}
+					catch (Negerror& e) {
+						p->exchange_lr();
+						continue;
+					}
+					catch (Exaerror& e) {
+						p->set_lchild(generate_tree(t, limit1, setting.num_max));
+						p->set_rchild(generate_tree(t, limit2, setting.num_max));
+						continue;
+					}
+					catch (...) {
+						throw;
+					}
+					break;
 				}
-				catch (Zeroerror& e) {
-					p->set_lchild(generate_tree(limit1));
-					p->set_rchild(generate_tree(limit2));
-					continue;
-				}
-				catch (Negerror& e) {
-					p->exchange_lr();
-					continue;
-				}
-				catch (Exaerror& e) {
-					p->set_lchild(generate_tree(limit1));
-					p->set_rchild(generate_tree(limit2));
-					continue;
-				}
-				catch (...) {
-					throw;
-				}
-				break;
 			}
 		}
 
