@@ -3,7 +3,7 @@
 #include <ctime>
 #include <string>
 
-#include "generator.h"
+#include "../../Core/Core/generator.h"
 
 using namespace std;
 
