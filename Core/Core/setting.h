@@ -8,11 +8,11 @@ typedef enum { DOUBLE, INT, FRACTION } NumType;
 
 
 typedef enum { NUM, OPR } NODETYPE;
-const int TYPENUM = 2;
+static const int TYPENUM = 2;
 
 
 typedef enum { ADD, SUB, MUL, DIV, POW } OPRTYPE;
-const int OPRNUM = 5;
+static const int OPRNUM = 5;
 
 
 typedef struct Setting {
@@ -22,6 +22,7 @@ typedef struct Setting {
 	int exp_num = 5;
 	NumType type = DOUBLE;
 	int precision = 2;
+	int pow_max = 5; // max power exp
 
 } Setting;
 

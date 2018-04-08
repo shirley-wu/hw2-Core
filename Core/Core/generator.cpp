@@ -17,7 +17,7 @@ std::vector<Node *> arr;
 Setting setting;
 
 
-Node * generate_tree(NumType t, int limit, int num_max, bool num_en = true);
+Node * generate_tree(int limit, bool num_en = true);
 
 
 NumType int_to_type(int type) {
@@ -46,7 +46,7 @@ void set(int num_max, int num_limit, int exp_num, int type, int precision) {
 void generate() {
 	clear();
 	for (int i = 0; i < setting.exp_num; i++) {
-		Node * p = generate_tree(setting.type, setting.num_limit, false);
+		Node * p = generate_tree(setting.num_limit, false);
 		bool unique;
 		while (1) {
 			unique = true;
@@ -59,7 +59,7 @@ void generate() {
 			if (unique) break;
 			else {
 				delete p;
-				p = generate_tree(setting.type, setting.num_limit, false);
+				p = generate_tree(setting.num_limit, false);
 			}
 		}
 		arr.push_back(p);
@@ -82,12 +82,12 @@ bool get_exp(int i, string& s, string& result) {
 	
 	Node * t = arr[i];
 	to_expression(t, s);
-	to_expression(t, result);
+	to_answer(t, result);
 	return true;
 }
 
 
-Node * generate_tree(NumType t, int limit, int num_max, bool num_en) {
+Node * generate_tree(int limit, bool num_en) {
 	Node * p;
 	NODETYPE type;
 	if (limit == 1) type = NUM;
@@ -95,10 +95,11 @@ Node * generate_tree(NumType t, int limit, int num_max, bool num_en) {
 	else type = NODETYPE(rand() % TYPENUM);
 
 	if (type == NUM) {
-		p = Node::randNum(t, setting.num_max);
+		p = Node::randNum(setting.type, setting.num_max);
 	}
 	else {
-		OPRTYPE opr = OPRTYPE(rand() % OPRNUM);
+		int v = rand() % OPRNUM;
+		OPRTYPE opr = OPRTYPE(v);
 		p = new Node(opr);
 
 		if (setting.type == INT && opr == DIV) {
@@ -119,9 +120,9 @@ Node * generate_tree(NumType t, int limit, int num_max, bool num_en) {
 			}
 
 			if (opr == POW) {
-				int v = rand() % setting.num_max;
-				p->set_lchild(generate_tree(t, limit1, setting.num_max));
-				p->set_rchild(generate_tree(INT, limit2, v));
+				int v = rand() % setting.pow_max;
+				p->set_lchild(generate_tree(limit1));
+				p->set_rchild(Node::randNum(INT, v));
 
 				while (true) {
 					try {
@@ -129,7 +130,7 @@ Node * generate_tree(NumType t, int limit, int num_max, bool num_en) {
 					}
 					catch (Overflow& e) {
 						v /= 2;
-						p->set_rchild(generate_tree(INT, limit2, v));
+						p->set_rchild(Node::randNum(INT, v));
 						continue;
 					}
 					catch (...) {
@@ -139,21 +140,21 @@ Node * generate_tree(NumType t, int limit, int num_max, bool num_en) {
 				}
 			}
 			else {
-				p->set_lchild(generate_tree(t, limit1, setting.num_max));
-				p->set_rchild(generate_tree(t, limit2, setting.num_max));
+				p->set_lchild(generate_tree(limit1));
+				p->set_rchild(generate_tree(limit2));
 
 				while (true) {
 					try {
 						p->calc_val();
 					}
 					catch (Overflow& e) {
-						p->set_lchild(generate_tree(t, limit1, setting.num_max));
-						p->set_rchild(generate_tree(t, limit2, setting.num_max));
+						p->set_lchild(generate_tree(limit1));
+						p->set_rchild(generate_tree(limit2));
 						continue;
 					}
 					catch (Zeroerror& e) {
-						p->set_lchild(generate_tree(t, limit1, setting.num_max));
-						p->set_rchild(generate_tree(t, limit2, setting.num_max));
+						p->set_lchild(generate_tree(limit1));
+						p->set_rchild(generate_tree(limit2));
 						continue;
 					}
 					catch (Negerror& e) {
@@ -161,8 +162,8 @@ Node * generate_tree(NumType t, int limit, int num_max, bool num_en) {
 						continue;
 					}
 					catch (Exaerror& e) {
-						p->set_lchild(generate_tree(t, limit1, setting.num_max));
-						p->set_rchild(generate_tree(t, limit2, setting.num_max));
+						p->set_lchild(generate_tree(limit1));
+						p->set_rchild(generate_tree(limit2));
 						continue;
 					}
 					catch (...) {

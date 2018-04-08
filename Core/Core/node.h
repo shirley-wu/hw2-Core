@@ -25,20 +25,11 @@ private:
 	Node * rchild = NULL;
 
 public:
+	Node() { }
 	Node(int v) {
 		nodetype = NUM;
 		numtype = INT;
 		ival = v;
-	}
-	Node(double v) {
-		nodetype = NUM;
-		numtype = DOUBLE;
-		dval = v;
-	}
-	Node(Fraction f) {
-		nodetype = NUM;
-		numtype = FRACTION;
-		fval = f;
 	}
 	Node(OPRTYPE ov) {
 		nodetype = OPR;

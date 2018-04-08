@@ -10,19 +10,25 @@ using namespace std;
 
 
 Node* Node::randNum(NumType type, int num_max) {
-	Node * p = NULL;
+	Node * p = new Node();
+	p->nodetype = NUM;
+	p->numtype = type;
+
 	if (type == INT) {
-		p = new Node(rand() % num_max);
+		if (num_max == 0) p->ival = 0;
+		else p->ival = rand() % num_max;
 	}
 	else if (type == DOUBLE) {
-		int base = pow(10, setting.precision);
-		int real_max = base * num_max;
-		int val = rand() % real_max;
-		double real_val = (double)val / base;
-		p = new Node(real_val);
+		if (num_max == 0) p->dval = 0;
+		else {
+			int base = pow(10, setting.precision);
+			int real_max = base * num_max;
+			int val = rand() % real_max;
+			p->dval = (double)val / base;
+		}
 	}
 	else if (type == FRACTION) {
-		p = new Node(Fraction(rand() % num_max));
+		p->fval = Fraction(num_max == 0 ? 0 : (rand() % num_max));
 	}
 	return p;
 }
@@ -44,7 +50,7 @@ void Node::calc_val() {
 			numtype = lchild->numtype;
 			if (numtype == INT) {
 				ival = lchild->ival + rchild->ival;
-				if (ival < INT_MIN || ival > INT_MAX) throw(Overflow());
+				if (ival < 0) throw(Overflow());
 			}
 			else if (numtype == DOUBLE) {
 				dval = lchild->dval + rchild->dval;
@@ -74,7 +80,7 @@ void Node::calc_val() {
 			numtype = lchild->numtype;
 			if (numtype == INT) {
 				ival = lchild->ival * rchild->ival;
-				if (ival < INT_MIN || ival > INT_MAX) throw(Overflow());
+				if (ival < 0) throw(Overflow());
 			}
 			else if (numtype == DOUBLE) {
 				dval = lchild->dval * rchild->dval;
@@ -99,6 +105,24 @@ void Node::calc_val() {
 			else {
 				div(lchild->fval, rchild->fval, fval);
 			}
+		}
+		else if (opr == POW) {
+			assert(rchild->numtype == INT);
+			numtype = lchild->numtype;
+			if (numtype == INT) {
+				ival = pow(lchild->ival, rchild->ival);
+				if (ival < 0) throw(Overflow());
+			}
+			else if (numtype == DOUBLE) {
+				dval = pow(lchild->dval, rchild->ival);
+				if (dval < DBL_MIN || dval > DBL_MAX) throw(Overflow());
+			}
+			else {
+				pow(lchild->fval, rchild->ival, fval);
+			}
+		}
+		else {
+			throw("wtf");
 		}
 	}
 	calculated = true;
@@ -159,8 +183,9 @@ void to_expression(Node * t, string& s) {
 			is << '(' << child << ')';
 		}
 		else is << child;
+
+		getline(is, s);
 	}
-	getline(is, s);
 }
 
 
