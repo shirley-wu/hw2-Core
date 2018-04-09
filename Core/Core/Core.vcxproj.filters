@@ -24,11 +24,11 @@
     <ClCompile Include="node.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="setting.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="generator.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="fraction.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -39,6 +39,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="setting.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="dll.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

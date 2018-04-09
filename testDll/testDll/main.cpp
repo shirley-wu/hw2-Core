@@ -3,7 +3,7 @@
 #include <ctime>
 #include <string>
 
-#include "../../Core/Core/generator.h"
+#include "../../Core/Core/dll.h"
 
 using namespace std;
 
@@ -14,11 +14,12 @@ int main() {
 
 	bool add, sub, mul, div, pow;
 	add = true; sub = 1; mul = 1; div = true; pow = true;
-	set(1000, 20, 10, 0, 3);
+	set(1000, 20, 1000, 0, 3);
+	set_power_signal(false);
 	set_opr(add, sub, mul, div, pow);
 	generate();
 
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 1000; i++) {
 		if (get_exp(i, s, result) == false) {
 			cout << "problem" << i << endl;
 			system("pause");

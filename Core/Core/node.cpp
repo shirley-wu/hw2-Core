@@ -9,26 +9,26 @@
 using namespace std;
 
 
-Node* Node::randNum(NumType type, int num_max) {
+Node* Node::randNum() {
 	Node * p = new Node();
 	p->nodetype = NUM;
-	p->numtype = type;
+	p->numtype = setting.type;
 
-	if (type == INT) {
-		if (num_max == 0) p->ival = 0;
-		else p->ival = rand() % num_max;
+	if (p->numtype == INT) {
+		if (setting.num_max == 0) p->ival = 0;
+		else p->ival = rand() % setting.num_max;
 	}
-	else if (type == DOUBLE) {
-		if (num_max == 0) p->dval = 0;
+	else if (p->numtype == DOUBLE) {
+		if (setting.num_max == 0) p->dval = 0;
 		else {
 			int base = pow(10, setting.precision);
-			int real_max = base * num_max;
+			int real_max = base * setting.num_max;
 			int val = rand() % real_max;
 			p->dval = (double)val / base;
 		}
 	}
-	else if (type == FRACTION) {
-		p->fval = Fraction(num_max == 0 ? 0 : (rand() % num_max));
+	else if (p->numtype == FRACTION) {
+		p->fval = Fraction(setting.num_max == 0 ? 0 : (rand() % setting.num_max));
 	}
 	return p;
 }
@@ -175,7 +175,10 @@ void to_expression(Node * t, string& s) {
 		else if (t->opr == SUB) c = "-";
 		else if (t->opr == MUL) c = "*";
 		else if (t->opr == DIV) c = "/";
-		else if (t->opr == POW) c = "^";
+		else if (t->opr == POW) {
+			if (setting.power_signal) c = "^";
+			else c = "**";
+		}
 		else c = '?';
 		is << ' ' << c << ' ';
 

@@ -40,7 +40,7 @@ public:
 		if(rchild) delete rchild;
 	}
 
-	static Node * randNum(NumType type, int num_max);
+	static Node * randNum();
 
 	void set_lchild(Node * p) {
 		if (lchild != NULL) delete lchild;

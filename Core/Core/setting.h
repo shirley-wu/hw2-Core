@@ -35,6 +35,8 @@ typedef struct Setting {
 	// number of available opr
 	bool power_signal = true;
 	// way to show power: true -> '^', false -> '**'
+	int min_depth = 1;
+	int max_depth = 10;
 
 } Setting;
 

@@ -124,11 +124,12 @@
     <ClCompile Include="fraction.cpp" />
     <ClCompile Include="generator.cpp" />
     <ClCompile Include="node.cpp" />
+    <ClCompile Include="setting.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dll.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="fraction.h" />
-    <ClInclude Include="generator.h" />
     <ClInclude Include="node.h" />
     <ClInclude Include="setting.h" />
   </ItemGroup>
