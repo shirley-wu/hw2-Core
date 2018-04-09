@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <sstream>
 #include <vector>
+#include <ctime>
 
 #include "exception.h"
 #include "node.h"
@@ -36,6 +37,7 @@ void clear() {
 
 void generate() {
 	clear();
+	srand((unsigned)time(0));
 	for (int i = 0; i < setting.exp_num; i++) {
 		Node * p = generate_tree(setting.num_limit, false);
 		bool unique;

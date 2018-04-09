@@ -9,12 +9,11 @@ using namespace std;
 
 
 int main() {
-	srand((unsigned)time(0));
 	string s, result;
 
 	bool add, sub, mul, div, pow;
 	add = true; sub = 1; mul = 1; div = true; pow = true;
-	set(1000, 3, 1000, 0, 3);
+	set(1000, 3, 1, 0, 3);
 	set_power_signal(false);
 	set_opr(add, sub, mul, div, pow);
 	generate();
