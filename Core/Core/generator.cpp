@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include <assert.h>
 #include <sstream>
 #include <vector>
@@ -18,6 +18,7 @@ Setting setting;
 
 
 Node * generate_tree(int limit, bool num_en = true);
+Node * create_int_node(int a);
 
 
 NumType int_to_type(int type) {
@@ -105,10 +106,8 @@ Node * generate_tree(int limit, bool num_en) {
 		if (setting.type == INT && opr == DIV) {
 			int denom = rand() % (setting.num_max - 1) + 1;
 			int numer = (rand() % (setting.num_max / denom) + 1) * denom;
-			Node *pl = new Node(numer);
-			Node *pr = new Node(denom);
-			p->set_lchild(pl);
-			p->set_rchild(pr);
+			p->set_lchild(create_int_node(numer));
+			p->set_rchild(create_int_node(denom));
 			p->calc_val();
 		}
 		else {
@@ -120,17 +119,17 @@ Node * generate_tree(int limit, bool num_en) {
 			}
 
 			if (opr == POW) {
-				int v = rand() % setting.pow_max;
+				int v = rand() % 5;
 				p->set_lchild(generate_tree(limit1));
-				p->set_rchild(Node::randNum(INT, v));
+				p->set_rchild(create_int_node(v));
 
 				while (true) {
 					try {
 						p->calc_val();
 					}
 					catch (Overflow& e) {
-						v /= 2;
-						p->set_rchild(Node::randNum(INT, v));
+						v--;
+						p->set_rchild(create_int_node(v));
 						continue;
 					}
 					catch (...) {
@@ -176,5 +175,41 @@ Node * generate_tree(int limit, bool num_en) {
 
 	}
 
+	return p;
+}
+
+
+Node * create_int_node(int a) {
+	if (a < 0) throw(Negerror());
+
+	Node *p = NULL;
+	NODETYPE type = NODETYPE(rand() % TYPENUM);
+
+	if (type == NUM) {
+		p = new Node(a);
+	}
+	else {
+		OPRTYPE tool;
+		if (a == 0) tool = SUB;
+		else tool = (rand() % 2) == 0 ? ADD : SUB;
+		int lchnum, rchnum;
+
+		if (tool == ADD) {
+			lchnum = rand() % a;
+			rchnum = a - lchnum;
+			p = new Node(ADD);
+			p->set_lchild(create_int_node(lchnum));
+			p->set_rchild(create_int_node(rchnum));
+			p->calc_val();
+		}
+		else {
+			rchnum = rand() % (setting.num_max - a);
+			lchnum = a + rchnum;
+			p = new Node(SUB);
+			p->set_lchild(create_int_node(lchnum));
+			p->set_rchild(create_int_node(rchnum));
+			p->calc_val();
+		}
+	}
 	return p;
 }

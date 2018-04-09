@@ -123,7 +123,6 @@
   <ItemGroup>
     <ClCompile Include="fraction.cpp" />
     <ClCompile Include="generator.cpp" />
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="node.cpp" />
   </ItemGroup>
   <ItemGroup>
