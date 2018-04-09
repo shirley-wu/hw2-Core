@@ -19,8 +19,8 @@ using namespace std;
 std::vector<Node *> arr;
 
 
-Node * generate_tree(int limit, int depth);
-Node * create_int_node(int a, int limit_depth);
+Node * generate_tree(int limit, bool num_en = true);
+Node * create_int_node(int a, int limit);
 OPRTYPE randomopr();
 
 
@@ -68,15 +68,14 @@ bool get_exp(int i, string& s, string& result) {
 }
 
 
-Node * generate_tree(int limit, int depth) {
+Node * generate_tree(int limit, bool num_en) {
 	Node * p;
 	NODETYPE type;
 	if (limit == 1) {
-		if (depth < setting.min_depth) throw("wtf");
+		if (num_en == false) throw("wtf");
 		else type = NUM;
 	}
-	else if (depth == setting.max_depth) type = NUM;
-	else if (depth < setting.min_depth) type = OPR;
+	else if (num_en == false) type = OPR;
 	else type = NODETYPE(rand() % TYPENUM);
 
 	if (type == NUM) {
@@ -87,25 +86,25 @@ Node * generate_tree(int limit, int depth) {
 		OPRTYPE opr = randomopr();
 		p = new Node(opr);
 
+		int limit1, limit2;
+		if (limit == 2) limit1 = limit2 = 1;
+		else {
+			limit1 = (rand() % (limit - 2)) + 1;
+			limit2 = limit - limit1;
+		}
+
 		if (setting.type == INT && opr == DIV) {
 			int denom = rand() % (setting.num_max - 1) + 1;
 			int numer = (rand() % (setting.num_max / denom) + 1) * denom;
-			p->set_lchild(create_int_node(numer, setting.max_depth - depth));
-			p->set_rchild(create_int_node(denom, setting.max_depth - depth));
+			p->set_lchild(create_int_node(numer, limit1));
+			p->set_rchild(create_int_node(denom, limit2));
 			p->calc_val();
 		}
 		else {
-			int limit1, limit2;
-			if (limit == 2) limit1 = limit2 = 1;
-			else {
-				limit1 = (rand() % (limit - 2)) + 1;
-				limit2 = limit - limit1;
-			}
-
 			if (opr == POW) {
 				int v = rand() % 5;
-				p->set_lchild(generate_tree(limit1, depth + 1));
-				p->set_rchild(create_int_node(v, setting.max_depth - depth));
+				p->set_lchild(generate_tree(limit1));
+				p->set_rchild(create_int_node(v, limit2));
 
 				while (true) {
 					try {
@@ -113,7 +112,7 @@ Node * generate_tree(int limit, int depth) {
 					}
 					catch (Overflow& e) {
 						v--;
-						p->set_rchild(create_int_node(v, setting.max_depth - depth));
+						p->set_rchild(create_int_node(v, limit2));
 						continue;
 					}
 					catch (...) {
@@ -123,21 +122,21 @@ Node * generate_tree(int limit, int depth) {
 				}
 			}
 			else {
-				p->set_lchild(generate_tree(limit1, depth + 1));
-				p->set_rchild(generate_tree(limit2, depth + 1));
+				p->set_lchild(generate_tree(limit1));
+				p->set_rchild(generate_tree(limit2));
 
 				while (true) {
 					try {
 						p->calc_val();
 					}
 					catch (Overflow& e) {
-						p->set_lchild(generate_tree(limit1, depth + 1));
-						p->set_rchild(generate_tree(limit2, depth + 1));
+						p->set_lchild(generate_tree(limit1));
+						p->set_rchild(generate_tree(limit2));
 						continue;
 					}
 					catch (Zeroerror& e) {
-						p->set_lchild(generate_tree(limit1, depth + 1));
-						p->set_rchild(generate_tree(limit2, depth + 1));
+						p->set_lchild(generate_tree(limit1));
+						p->set_rchild(generate_tree(limit2));
 						continue;
 					}
 					catch (Negerror& e) {
@@ -145,8 +144,8 @@ Node * generate_tree(int limit, int depth) {
 						continue;
 					}
 					catch (Exaerror& e) {
-						p->set_lchild(generate_tree(limit1, depth + 1));
-						p->set_rchild(generate_tree(limit2, depth + 1));
+						p->set_lchild(generate_tree(limit1));
+						p->set_rchild(generate_tree(limit2));
 						continue;
 					}
 					catch (...) {
@@ -163,14 +162,14 @@ Node * generate_tree(int limit, int depth) {
 }
 
 
-Node * create_int_node(int a, int limit_depth) {
+Node * create_int_node(int a, int limit) {
 	if (a < 0) throw(Negerror());
 
 	Node *p = NULL;
 	NODETYPE type;
 	OPRTYPE tool;
 
-	if (limit_depth == 1 || (setting.opr[(int)SUB] == false && setting.opr[(int)ADD] == false)) {
+	if (limit == 1 || (setting.opr[(int)SUB] == false && setting.opr[(int)ADD] == false)) {
 		type = NUM;
 	}
 	else if (a == 0) {
@@ -194,22 +193,29 @@ Node * create_int_node(int a, int limit_depth) {
 		p = new Node(a);
 	}
 	else {
+		int limit1, limit2;
+		if (limit == 2) limit1 = limit2 = 1;
+		else {
+			limit1 = (rand() % (limit - 2)) + 1;
+			limit2 = limit - limit1;
+		}
+
 		int lchnum, rchnum;
 
 		if (tool == ADD) {
 			lchnum = rand() % a;
 			rchnum = a - lchnum;
 			p = new Node(ADD);
-			p->set_lchild(create_int_node(lchnum, limit_depth - 1));
-			p->set_rchild(create_int_node(rchnum, limit_depth - 1));
+			p->set_lchild(create_int_node(lchnum, limit1));
+			p->set_rchild(create_int_node(rchnum, limit2));
 			p->calc_val();
 		}
 		else {
 			rchnum = rand() % (setting.num_max - a);
 			lchnum = a + rchnum;
 			p = new Node(SUB);
-			p->set_lchild(create_int_node(lchnum, limit_depth - 1));
-			p->set_rchild(create_int_node(rchnum, limit_depth - 1));
+			p->set_lchild(create_int_node(lchnum, limit1));
+			p->set_rchild(create_int_node(rchnum, limit2));
 			p->calc_val();
 		}
 	}
