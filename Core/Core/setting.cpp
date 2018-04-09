@@ -15,20 +15,33 @@ Setting setting;
 
 
 void set(int num_max, int num_limit, int exp_num, int type, int precision) {
-	setting.num_max = num_max;
-	setting.num_limit = num_limit;
-	setting.exp_num = exp_num;
-	setting.type = 0 <= type && type <= 2 ? NumType(type) : DOUBLE;
-	setting.precision = precision;
+	if (setting.num_max > 0) {
+		setting.num_max = num_max;
+	}
+	if (setting.num_limit > 0) {
+		setting.num_limit = num_limit;
+	}
+	if (setting.exp_num > 0) {
+		setting.exp_num = exp_num;
+	}
+	if (0 <= type && type <= 2) {
+		type = NumType(type);
+	}
+	if (precision > 0) {
+		setting.precision = precision;
+	}
 }
 
 
 void set_precision(int precision) {
-	setting.precision = precision;
+	if (precision > 0) {
+		setting.precision = precision;
+	}
 }
 
 
 void set_opr(bool add, bool sub, bool mul, bool div, bool pow) {
+	if (add == false && sub == false && mul == false && div == false && pow == false) return;
 	setting.opr[0] = add;
 	setting.opr[1] = sub;
 	setting.opr[2] = mul;
