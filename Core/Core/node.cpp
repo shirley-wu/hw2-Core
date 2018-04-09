@@ -151,7 +151,8 @@ bool equal(const Node * t1, const Node * t2) {
 int prior(OPRTYPE type) {
 	if (type == ADD || type == SUB) return 1;
 	else if (type == MUL || type == DIV) return 2;
-	else return -1;
+	else if (type == POW) return 3;
+	else throw("wtf");
 }
 
 
@@ -194,7 +195,7 @@ void to_answer(Node * p, string& s) {
 	
 	stringstream ir;
 	if (p->numtype == INT) ir << p->ival;
-	else if (p->numtype == DOUBLE) ir << setprecision(setting.precision) << p->dval;
+	else if (p->numtype == DOUBLE) ir << fixed << setprecision(setting.precision) << p->dval;
 	else ir << p->fval;
 	getline(ir, s);
 }

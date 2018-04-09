@@ -18,11 +18,23 @@ static const int OPRNUM = 5;
 typedef struct Setting {
 
 	int num_max = 1000;
+	// maximum of num
 	int num_limit = 20;
+	// limit of nums
 	int exp_num = 5;
+	// number of expressions
 	NumType type = DOUBLE;
+	// type of number
 	int precision = 2;
-	int pow_max = 5; // max power exp
+	// precision of double
+	int pow_max = 5;
+	// max power exp
+	bool opr[OPRNUM] = { true, true, true, true, false };
+	// available opr
+	int opr_num = 4;
+	// number of available opr
+	bool power_signal = true;
+	// way to show power: true -> '^', false -> '**'
 
 } Setting;
 

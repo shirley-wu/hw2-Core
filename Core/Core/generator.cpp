@@ -19,29 +19,7 @@ Setting setting;
 
 Node * generate_tree(int limit, bool num_en = true);
 Node * create_int_node(int a);
-
-
-NumType int_to_type(int type) {
-	switch (type) {
-	case 0:
-		return DOUBLE;
-	case 1:
-		return INT;
-	case 2:
-		return FRACTION;
-	default:
-		throw(NumTypeError());
-	}
-}
-
-
-void set(int num_max, int num_limit, int exp_num, int type, int precision) {
-	setting.num_max = num_max;
-	setting.num_limit = num_limit;
-	setting.exp_num = exp_num;
-	setting.type = int_to_type(type);
-	setting.precision = precision;
-}
+OPRTYPE randomopr();
 
 
 void generate() {
@@ -100,7 +78,7 @@ Node * generate_tree(int limit, bool num_en) {
 	}
 	else {
 		int v = rand() % OPRNUM;
-		OPRTYPE opr = OPRTYPE(v);
+		OPRTYPE opr = randomopr();
 		p = new Node(opr);
 
 		if (setting.type == INT && opr == DIV) {
@@ -183,15 +161,33 @@ Node * create_int_node(int a) {
 	if (a < 0) throw(Negerror());
 
 	Node *p = NULL;
-	NODETYPE type = NODETYPE(rand() % TYPENUM);
+	NODETYPE type;
+	OPRTYPE tool;
+
+	if (setting.opr[(int)SUB] == false && setting.opr[(int)ADD] == false) {
+		type = NUM;
+	}
+	else if (a == 0) {
+		if (setting.opr[(int)SUB] == false) type = NUM;
+		else {
+			type = NODETYPE(rand() % TYPENUM);
+			if (type == OPR) tool = SUB;
+		}
+	}
+	else {
+		type = NODETYPE(rand() % TYPENUM);
+		if (type == OPR) {
+			if (setting.opr[(int)SUB] == false) tool = ADD;
+			else if (setting.opr[(int)ADD] == false) tool = SUB;
+			else tool = (rand() % 2) == 0 ? ADD : SUB;
+		}
+	}
+	
 
 	if (type == NUM) {
 		p = new Node(a);
 	}
 	else {
-		OPRTYPE tool;
-		if (a == 0) tool = SUB;
-		else tool = (rand() % 2) == 0 ? ADD : SUB;
 		int lchnum, rchnum;
 
 		if (tool == ADD) {
@@ -212,4 +208,43 @@ Node * create_int_node(int a) {
 		}
 	}
 	return p;
+}
+
+
+void set(int num_max, int num_limit, int exp_num, int type, int precision) {
+	setting.num_max = num_max;
+	setting.num_limit = num_limit;
+	setting.exp_num = exp_num;
+	setting.type = 0 <= type && type <= 2 ? NumType(type) : DOUBLE;
+	setting.precision = precision;
+}
+
+
+void set_precision(int precision) {
+	setting.precision = precision;
+}
+
+
+void set_opr(bool add, bool sub, bool mul, bool div, bool pow) {
+	setting.opr[0] = add;
+	setting.opr[1] = sub;
+	setting.opr[2] = mul;
+	setting.opr[3] = div;
+	setting.opr[4] = pow;
+	setting.opr_num = 0;
+	for (int i = 0; i < OPRNUM; i++) {
+		if (setting.opr[i]) setting.opr_num++;
+	}
+}
+
+
+OPRTYPE randomopr() {
+	int v = rand() % setting.opr_num;
+	for (int i = 0; i < OPRNUM; i++) {
+		if (setting.opr[i]) {
+			if (v == 0) return OPRTYPE(i);
+			else v--;
+		}
+	}
+	throw("wtf");
 }
