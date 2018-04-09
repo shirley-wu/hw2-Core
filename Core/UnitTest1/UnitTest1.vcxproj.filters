@@ -26,16 +26,13 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="testNode.cpp">
+    <ClCompile Include="testFraction.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="testGenerator.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="testFraction.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="testNum.cpp">
+    <ClCompile Include="testNode.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

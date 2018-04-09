@@ -47,8 +47,8 @@ namespace UnitTest1
 
 		TEST_METHOD(AddFraction)
 		{
-			Fraction f1(1, 6), f2(4, 21);
-			Fraction f = f1 + f2;
+			Fraction f1(1, 6), f2(4, 21), f;
+			add(f1, f2, f);
 			stringstream ss;
 			string s;
 			ss << f;
@@ -58,8 +58,8 @@ namespace UnitTest1
 
 		TEST_METHOD(SubFraction)
 		{
-			Fraction f1(5, 6), f2(5, 6);
-			Fraction f = f1 - f2;
+			Fraction f1(5, 6), f2(5, 6), f;
+			sub(f1, f2, f);
 			stringstream ss;
 			string s;
 			ss << f;
@@ -69,8 +69,8 @@ namespace UnitTest1
 
 		TEST_METHOD(MulFraction)
 		{
-			Fraction f1(7, 12), f2(24, 35);
-			Fraction f = f1 * f2;
+			Fraction f1(7, 12), f2(24, 35), f;
+			mul(f1, f2, f);
 			stringstream ss;
 			string s;
 			ss << f;
@@ -80,8 +80,8 @@ namespace UnitTest1
 
 		TEST_METHOD(DivFraction)
 		{
-			Fraction f1(13, 21), f2(52, 81);
-			Fraction f = f1 / f2;
+			Fraction f1(13, 21), f2(52, 81), f;
+			div(f1, f2, f);
 			stringstream ss;
 			string s;
 			ss << f;
@@ -91,11 +91,11 @@ namespace UnitTest1
 
 		TEST_METHOD(ExpFraction)
 		{
-			Fraction f(4, 5);
-			f = f ^ 5;
+			Fraction f(4, 5), f2;
+			pow(f, 5, f2);
 			stringstream ss;
 			string s;
-			ss << f;
+			ss << f2;
 			ss >> s;
 			Assert::AreEqual(string("1024/3125"), s);
 		}

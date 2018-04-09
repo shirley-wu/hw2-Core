@@ -2,7 +2,7 @@
 #include "CppUnitTest.h"
 #include <string>
 
-#include "../Core/generator.h"
+#include "../Core/dll.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using std::string;

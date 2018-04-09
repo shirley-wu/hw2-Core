@@ -1,81 +1,58 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include <cstdlib>
+#include <string>
 #include <ctime>
+#include <sstream>
 
 #include "../Core/node.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using std::string;
+using std::stringstream;
 
 namespace UnitTest1
 {		
 	TEST_CLASS(TestNode)
 	{
 	public:
-		
-		TEST_METHOD(SingleNUM)
-		{
+		TestNode() {
 			srand((unsigned)time(0));
+		}
+		
+		TEST_METHOD(SingleINT)
+		{
 			int val = rand() % 50000;
-			Node node1(val);
-			node1.calc_val();
-			Assert::IsTrue(Num(val) == node1.get_val());
+			Node n(val);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.calc_val();
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << val;
+			st1 = st2 = ss.str();
+			Assert::AreEqual(s1, st1, L"expression");
+			Assert::AreEqual(s2, st2, L"answer");
 		}
 
-		TEST_METHOD(SingleADD) {
+		TEST_METHOD(AddINT) {
 			int val1, val2;
 			val1 = rand() % 50000;
 			val2 = rand() % 50000;
-			Node node1(ADD);
-			Node *p, *q;
-			p = new Node(val1);
-			node1.set_lchild(p);
-			q = new Node(val2);
-			node1.set_rchild(q);
-			node1.calc_val();
-			Assert::IsTrue(Num(val1 + val2) == node1.get_val());
-		}
-
-		TEST_METHOD(SingleSUB) {
-			int val1, val2;
-			val1 = 1000;
-			val2 = 500;
-			Node node1(SUB);
-			Node *p, *q;
-			p = new Node(val1);
-			node1.set_lchild(p);
-			q = new Node(val2);
-			node1.set_rchild(q);
-			node1.calc_val();
-			Assert::IsTrue(Num(val1 - val2) == node1.get_val());
-		}
-
-		TEST_METHOD(SingleMUL) {
-			int val1, val2;
-			val1 = rand() % 50000;
-			val2 = rand() % 50000;
-			Node node1(MUL);
-			Node *p, *q;
-			p = new Node(val1);
-			node1.set_lchild(p);
-			q = new Node(val2);
-			node1.set_rchild(q);
-			node1.calc_val();
-			Assert::IsTrue(Num(val1 * val2) == node1.get_val());
-		}
-
-		TEST_METHOD(SingleDIV) {
-			int val1, val2;
-			val1 = rand() % 50000;
-			val2 = val1 * 2;
-			Node node1(DIV);
-			Node *p, *q;
-			p = new Node(val2);
-			node1.set_lchild(p);
-			q = new Node(val1);
-			node1.set_rchild(q);
-			node1.calc_val();
-			Assert::IsTrue(Num(2) == node1.get_val());
+			Node n(ADD);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.set_lchild(new Node(val1));
+			n.set_rchild(new Node(val2));
+			n.calc_val();
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << val1 << " + " << val2;
+			st1 = ss.str();
+			ss << val1 + val2;
+			st2 = ss.str();
+			Assert::AreEqual(s1, st1, L"expression");
+			Assert::AreEqual(s2, st2, L"answer");
 		}
 
 		TEST_METHOD(Equal) {
