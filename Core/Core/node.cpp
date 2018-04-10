@@ -68,7 +68,7 @@ void Node::calc_val() {
 				if (ival < 0) throw(Negerror());
 			}
 			else if (numtype == DOUBLE) {
-				dval = lchild->dval + rchild->dval;
+				dval = lchild->dval - rchild->dval;
 				if (dval < 0) throw(Negerror());
 			}
 			else {
@@ -99,8 +99,8 @@ void Node::calc_val() {
 				ival = lchild->ival / rchild->ival;
 			}
 			else if (numtype == DOUBLE) {
-				dval = lchild->dval + rchild->dval;
-				if (dval < DBL_MIN || dval > DBL_MAX) throw(Overflow());
+				if (rchild->dval < EPS) throw(Zeroerror());
+				dval = lchild->dval / rchild->dval;
 			}
 			else {
 				div(lchild->fval, rchild->fval, fval);
