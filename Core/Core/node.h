@@ -31,6 +31,11 @@ public:
 		numtype = INT;
 		ival = v;
 	}
+	Node(double v) {
+		nodetype = NUM;
+		numtype = DOUBLE;
+		dval = v;
+	}
 	Node(OPRTYPE ov) {
 		nodetype = OPR;
 		opr = ov;

@@ -4,12 +4,16 @@
 #include <string>
 #include <ctime>
 #include <sstream>
+#include <iomanip>
 
 #include "../Core/node.h"
+#include "../Core/dll.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using std::string;
 using std::stringstream;
+using std::fixed;
+using std::setprecision;
 
 namespace UnitTest1
 {		
@@ -49,10 +53,209 @@ namespace UnitTest1
 			to_answer(&n, s2);
 			ss << val1 << " + " << val2;
 			st1 = ss.str();
+			getline(ss, st1);
+			ss.clear();
 			ss << val1 + val2;
-			st2 = ss.str();
+			getline(ss, st2);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+			Assert::AreEqual(st2, s2, L"answer");
+		}
+
+		TEST_METHOD(MulINT) {
+			int val1, val2;
+			val1 = rand() % 50000;
+			val2 = rand() % 50000;
+			Node n(MUL);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.set_lchild(new Node(val1));
+			n.set_rchild(new Node(val2));
+			n.calc_val();
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << val1 << " * " << val2;
+			getline(ss, st1);
+			ss.clear();
+			ss << val1 * val2;
+			getline(ss, st2);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+			Assert::AreEqual(st2, s2, L"answer");
+		}
+
+		TEST_METHOD(DivINT) {
+			int val1, val2;
+			val2 = rand() % 1000;
+			val1 = val2 * (rand() % 5000);
+			Node n(DIV);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.set_lchild(new Node(val1));
+			n.set_rchild(new Node(val2));
+			n.calc_val();
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << val1 << " / " << val2;
+			getline(ss, st1);
+			ss.clear();
+			ss << val1 / val2;
+			getline(ss, st2);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+			Assert::AreEqual(st2, s2, L"answer");
+		}
+
+		TEST_METHOD(PowINT) {
+			int val1, val2;
+			val1 = rand() % 100;
+			val2 = 3;
+			Node n(POW);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.set_lchild(new Node(val1));
+			n.set_rchild(new Node(val2));
+			n.calc_val();
+			set_power_signal(true);
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << val1 << " ^ " << val2;
+			getline(ss, st1);
+			ss.clear();
+			ss << (int)pow(val1, val2);
+			getline(ss, st2);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+			Assert::AreEqual(st2, s2, L"answer");
+			set_power_signal(false);
+			to_expression(&n, s1);
+			ss << val1 << " ** " << val2;
+			getline(ss, st1);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+		}
+
+		TEST_METHOD(SingleDOUBLE)
+		{
+			int p = 3;
+			set_precision(p);
+			double val = (rand() % 50000) / pow(10, p);
+			Node n(val);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.calc_val();
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << fixed << setprecision(p) << val;
+			st1 = st2 = ss.str();
 			Assert::AreEqual(s1, st1, L"expression");
 			Assert::AreEqual(s2, st2, L"answer");
+		}
+
+		TEST_METHOD(AddDOUBLE) {
+			int p = 3;
+			set_precision(p);
+			double val1, val2;
+			val1 = (rand() % 50000) / pow(10, p);
+			val2 = (rand() % 50000) / pow(10, p);
+			Node n(ADD);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.set_lchild(new Node(val1));
+			n.set_rchild(new Node(val2));
+			n.calc_val();
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << fixed << setprecision(p) << val1 << " + " << val2;
+			st1 = ss.str();
+			getline(ss, st1);
+			ss.clear();
+			ss << fixed << setprecision(p) << val1 + val2;
+			getline(ss, st2);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+			Assert::AreEqual(st2, s2, L"answer");
+		}
+
+		TEST_METHOD(MulDOUBLE) {
+			int p = 3;
+			set_precision(p);
+			double val1, val2;
+			val1 = (rand() % 50000) / pow(10, p);
+			val2 = (rand() % 50000) / pow(10, p);
+			Node n(MUL);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.set_lchild(new Node(val1));
+			n.set_rchild(new Node(val2));
+			n.calc_val();
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << fixed << setprecision(p) << val1 << " * " << val2;
+			st1 = ss.str();
+			getline(ss, st1);
+			ss.clear();
+			ss << fixed << setprecision(p) << val1 * val2;
+			getline(ss, st2);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+			Assert::AreEqual(st2, s2, L"answer");
+		}
+
+		TEST_METHOD(DivDOUBLE) {
+			int p = 3;
+			set_precision(p);
+			double val1, val2;
+			val1 = (rand() % 50000) / pow(10, p);
+			val2 = (rand() % 50000) / pow(10, p);
+			Node n(DIV);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.set_lchild(new Node(val1));
+			n.set_rchild(new Node(val2));
+			n.calc_val();
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << fixed << setprecision(p) << val1 << " / " << val2;
+			getline(ss, st1);
+			ss.clear();
+			ss << fixed << setprecision(p) << val1 / val2;
+			getline(ss, st2);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+			Assert::AreEqual(st2, s2, L"answer");
+		}
+
+		TEST_METHOD(PowDOUBLE) {
+			int p = 3;
+			set_precision(p);
+			double val1;
+			val1 = (rand() % 50000) / pow(10, p);
+			int val2;
+			val2 = 3;
+			Node n(POW);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.set_lchild(new Node(val1));
+			n.set_rchild(new Node(val2));
+			n.calc_val();
+			set_power_signal(true);
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << fixed << setprecision(p) << val1 << " ^ " << val2;
+			getline(ss, st1);
+			ss.clear();
+			ss << fixed << setprecision(p) << pow(val1, val2);
+			getline(ss, st2);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+			Assert::AreEqual(st2, s2, L"answer");
+			set_power_signal(false);
+			to_expression(&n, s1);
+			ss << fixed << setprecision(p) << val1 << " ** " << val2;
+			getline(ss, st1);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
 		}
 
 		TEST_METHOD(Equal) {
