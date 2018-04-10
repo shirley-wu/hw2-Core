@@ -62,6 +62,34 @@ namespace UnitTest1
 			Assert::AreEqual(st2, s2, L"answer");
 		}
 
+		TEST_METHOD(SubINT) {
+			int val1, val2;
+			val1 = rand() % 50000;
+			val2 = rand() % 50000;
+			if (val1 < val2) {
+				int tmp = val1;
+				val1 = val2;
+				val2 = tmp;
+			}
+			Node n(SUB);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.set_lchild(new Node(val1));
+			n.set_rchild(new Node(val2));
+			n.calc_val();
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << val1 << " - " << val2;
+			st1 = ss.str();
+			getline(ss, st1);
+			ss.clear();
+			ss << val1 - val2;
+			getline(ss, st2);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+			Assert::AreEqual(st2, s2, L"answer");
+		}
+
 		TEST_METHOD(MulINT) {
 			int val1, val2;
 			val1 = rand() % 50000;
@@ -171,6 +199,36 @@ namespace UnitTest1
 			getline(ss, st1);
 			ss.clear();
 			ss << fixed << setprecision(p) << val1 + val2;
+			getline(ss, st2);
+			ss.clear();
+			Assert::AreEqual(st1, s1, L"expression");
+			Assert::AreEqual(st2, s2, L"answer");
+		}
+
+		TEST_METHOD(SubDOUBLE) {
+			int p = 3;
+			set_precision(p);
+			double val1, val2;
+			val1 = (rand() % 50000) / pow(10, p);
+			val2 = (rand() % 50000) / pow(10, p);
+			if (val1 < val2) {
+				double tmp = val1;
+				val1 = val2;
+				val2 = tmp;
+			}
+			Node n(SUB);
+			string s1, s2, st1, st2;
+			stringstream ss;
+			n.set_lchild(new Node(val1));
+			n.set_rchild(new Node(val2));
+			n.calc_val();
+			to_expression(&n, s1);
+			to_answer(&n, s2);
+			ss << fixed << setprecision(p) << val1 << " - " << val2;
+			st1 = ss.str();
+			getline(ss, st1);
+			ss.clear();
+			ss << fixed << setprecision(p) << val1 - val2;
 			getline(ss, st2);
 			ss.clear();
 			Assert::AreEqual(st1, s1, L"expression");
