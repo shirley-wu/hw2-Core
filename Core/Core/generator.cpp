@@ -1,6 +1,7 @@
 ﻿#include <iostream>
 #include <assert.h>
 #include <sstream>
+#include <fstream>
 #include <vector>
 #include <ctime>
 
@@ -57,16 +58,6 @@ void generate() {
 		}
 		arr.push_back(p);
 	}
-}
-
-
-bool get_exp(int i, string& s, string& result) {
-	if (i < 0 || (unsigned)i >= arr.size()) return false;
-	
-	Node * t = arr[i];
-	to_expression(t, s);
-	to_answer(t, result);
-	return true;
 }
 
 
@@ -222,4 +213,44 @@ Node * create_int_node(int a, int limit) {
 		}
 	}
 	return p;
+}
+
+
+bool get_exp(int i, string& s, string& result) {
+	if (i < 0 || (unsigned)i >= arr.size()) return false;
+
+	Node * t = arr[i];
+	to_expression(t, s);
+	to_answer(t, result);
+	return true;
+}
+
+
+bool exp_to_file(const char* dir) {
+	ofstream is (dir);
+	if (is.fail()) return false;
+
+	for (int i = 0; i < arr.size(); i++) {
+		string s;
+		to_expression(arr[i], s);
+		is << s << endl;
+	}
+	is.close();
+
+	return true;
+}
+
+
+bool ans_to_file(const char* dir) {
+	ofstream is(dir);
+	if (is.fail()) return false;
+
+	for (int i = 0; i < arr.size(); i++) {
+		string s;
+		to_answer(arr[i], s);
+		is << s << endl;
+	}
+	is.close();
+
+	return true;
 }

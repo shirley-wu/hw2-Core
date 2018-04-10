@@ -23,8 +23,5 @@
     <Library Include="..\..\Core\x64\Debug\Core.lib">
       <Filter>资源文件</Filter>
     </Library>
-    <Library Include="..\..\Core\Debug\Core.lib">
-      <Filter>资源文件</Filter>
-    </Library>
   </ItemGroup>
 </Project>

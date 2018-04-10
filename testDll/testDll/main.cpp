@@ -18,7 +18,7 @@ int main() {
 	set_opr(add, sub, mul, div, pow);
 	generate();
 
-	for (int i = 0; i < 1000; i++) {
+	for (int i = 0; i < 10; i++) {
 		if (get_exp(i, s, result) == false) {
 			cout << "problem" << i << endl;
 			system("pause");
@@ -27,6 +27,15 @@ int main() {
 		cout << "result: " << result << endl;
 	}
 	cout << endl;
+
+	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression.txt") == false) {
+		cout << "exp problem\n";
+		system("pause");
+	}
+	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer.txt") == false) {
+		cout << "exp problem\n";
+		system("pause");
+	}
 /*
 	set(1000, 20, 10, 1);
 	generate();
@@ -51,6 +60,8 @@ int main() {
 		cout << "result: " << result << endl;
 	}
 */
+	clear();
+
 	system("pause");
 	return 0;
 }
