@@ -12,14 +12,13 @@ int main() {
 	generate();
 	// 默认生成十个式子，详见github上面的api说明或者直接看代码=w=
 
+	char *cs = new char[10000];
+	char *cresult = new char[10000];
+
 	for (int i = 0; i < 10; i++) {
-		char *cs = new char[10000];
-		char *cresult = new char[10000];
 		get_exp(i, cs, 10000, cresult);
 		cout << "s" << cs << endl;
 		cout << "cresult" << cresult << endl;
-		delete[] cs;
-		delete[] cresult;
 
 		string s, result;
 		get_exp(i, s, result);
@@ -28,6 +27,8 @@ int main() {
 
 		system("pause");
 	}
+	delete[] cs;
+	delete[] cresult;
 
 	clear();
 
