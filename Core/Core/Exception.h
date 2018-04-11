@@ -26,3 +26,8 @@ class Exaerror {//整型整除异常
 class NumTypeError {
 
 };
+
+
+class Overlength {
+
+};

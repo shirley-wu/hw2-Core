@@ -3,7 +3,7 @@
 #include <string>
 
 #ifdef CORE_DLL_IMPLEMENT
-#define CORE_DLL_API __declspec(dllexport)
+#define CORE_DLL_API
 #else
 #define CORE_DLL_API __declspec(dllimport)
 #endif
@@ -18,5 +18,7 @@ CORE_DLL_API void generate();
 CORE_DLL_API void clear();
 
 CORE_DLL_API bool get_exp(int i, std::string& s, std::string& result);
+CORE_DLL_API bool get_exp(int i, char *s, int size, char *result);
+
 CORE_DLL_API bool exp_to_file(const char* dir);
 CORE_DLL_API bool ans_to_file(const char* dir);

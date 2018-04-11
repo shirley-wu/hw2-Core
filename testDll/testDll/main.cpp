@@ -18,6 +18,20 @@ int main() {
 	set_opr(add, sub, mul, div, pow);
 	generate();
 
+	char *cs = new char[10000];
+	char *cresult = new char[10000];
+	get_exp(0, cs, 10000, cresult);
+	cout << "s" << cs << endl;
+	cout << "cresult" << cresult << endl;
+	delete[] cs;
+	delete[] cresult;
+
+	get_exp(0, s, result);
+	cout << "s" << s << endl;
+	cout << "cresult" << result << endl;
+
+	system("pause");
+
 	for (int i = 0; i < 10; i++) {
 		if (get_exp(i, s, result) == false) {
 			cout << "problem" << i << endl;

@@ -202,3 +202,59 @@ void to_answer(Node * p, string& s) {
 	else ir << p->fval;
 	getline(ir, s);
 }
+
+
+void to_expression(Node * t, char *s, int size) {
+	char *is = new char[size];
+	if (t->nodetype == NUM) {
+		to_answer(t, s);
+	}
+	else {
+		char *child = new char[size - 1];
+
+		to_expression(t->lchild, child, size - 1);
+		if (strlen(child) > size) throw(Overlength());
+		if (t->lchild->nodetype == OPR && prior(t->lchild->opr) < prior(t->opr)) {
+			snprintf(is, 2, "(");
+			snprintf(is, strlen(child) + 1, child);
+			snprintf(is, 2, ")");
+		}
+		else snprintf(is, strlen(child) + 1, child);
+
+		char c[200];
+		if (t->opr == ADD) snprintf(c, 2, "+");
+		else if (t->opr == SUB) snprintf(c, 2, "-");
+		else if (t->opr == MUL) snprintf(c, 2, "*");
+		else if (t->opr == DIV) snprintf(c, 2, "/");
+		else if (t->opr == POW) {
+			if (setting.power_signal) snprintf(c, 2, "^");
+			else snprintf(c, 3, "**");
+		}
+		else  snprintf(c, 2, "?");
+		snprintf(is, 2, " ");
+		snprintf(is + 2, strlen(c), c);
+		snprintf(is + 2 + strlen(c), 2, " ");
+		to_expression(t->rchild, child, size - 1);
+		if (strlen(child) > 200) throw(Overlength());
+		if (t->rchild->nodetype == OPR && prior(t->rchild->opr) <= prior(t->opr)) {
+			snprintf(is, 2, "(");
+			snprintf(is + 2, strlen(child), child);
+			snprintf(is + 2 + strlen(child), 2, ")");
+		}
+		else snprintf(is, strlen(child), child);
+		snprintf(s, strlen(is), is);
+		delete[]child;
+	}
+	delete[]is;
+}
+
+
+void to_answer(Node * p, char *s) {
+	if (p->calculated == false) p->calc_val();
+
+	char ir[200];
+	if (p->numtype == INT) snprintf(ir, 200, "%d", p->ival);
+	else if (p->numtype == DOUBLE) snprintf(ir, 200, "%.*lf", setprecision(setting.precision), p->dval);
+	else snprintf(ir, 200, "%d", p->ival);
+	snprintf(s, strlen(ir), ir);
+}

@@ -69,4 +69,7 @@ public:
 	friend void to_expression(Node * p, std::string& s);
 	friend void to_answer(Node * p, std::string& s);
 
+	friend void to_expression(Node * t, char *s, int size);
+	friend void to_answer(Node * p, char *s);
+
 } ;
