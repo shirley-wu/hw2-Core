@@ -25,7 +25,7 @@ void set(int num_max, int num_limit, int exp_num, int type, int precision) {
 		setting.exp_num = exp_num;
 	}
 	if (0 <= type && type <= 2) {
-		type = NumType(type);
+		setting.type = NumType(type);
 	}
 	if (precision > 0) {
 		setting.precision = precision;
