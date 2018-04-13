@@ -33,4 +33,6 @@ public:
 	bool operator==(const Fraction& f) const;
 	friend std::ostream& operator<<(std::ostream& os, const Fraction& f);
 
+	int to_str(char * s, int start, int end) const;
+
 };

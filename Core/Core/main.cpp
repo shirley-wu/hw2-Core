@@ -9,20 +9,20 @@ using namespace std;
 
 
 int main() {
-<<<<<<< HEAD
 	string s, result;
 	const int n = 1000;
-	char s[10];
 
-	/*int i = snprintf(s, 10, "hi");
+	/*char ss[10];
+
+	int i = snprintf(ss, 10, "%.*f", 3, 1.5555555);
 	cout << i << endl;
-	cout << s << endl;
-	int j = snprintf(s + i, 10 - i, "hello");
+	cout << ss << endl;
+	int j = snprintf(ss + i, 10 - i, "hello");
 	cout << j << endl;
-	cout << s << endl;
-	int k = snprintf(s, 5, "1234567890");
+	cout << ss << endl;
+	int k = snprintf(ss, 5, "1234567890");
 	cout << k << endl;
-	cout << s << endl;
+	cout << ss << endl;
 
 	system("pause");
 	return 0;*/
@@ -32,23 +32,35 @@ int main() {
 	char *cs = new char[10000];
 	char *cresult = new char[10000];
 
-	set(1000, 100, n, 0);
+	set(1000, 10, 10, 1);
 	generate();
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < 10; i++) {
 		if (get_exp(i, s, result) == false) {
 			system("pause");
 		}
+		if (get_exp(i, cs, 1000, cresult) == false) {
+			system("pause");
+		}
+		cout << s << " = " << result << endl;
+		cout << cs << " = " << cresult << endl;
 	}
+	system("pause");
 	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression0.txt") == false) system("pause");
 	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer0.txt") == false)system("pause");
 
-	set(1000, 100, n, 1);
+	set(1000, 10, 10, 0);
 	generate();
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < 10; i++) {
 		if (get_exp(i, s, result) == false) {
 			system("pause");
 		}
+		if (get_exp(i, cs, 1000, cresult) == false) {
+			system("pause");
+		}
+		cout << s << " = " << result << endl;
+		cout << cs << " = " << cresult << endl;
 	}
+	system("pause");
 	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression0.txt") == false) system("pause");
 	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer0.txt") == false)system("pause");
 
