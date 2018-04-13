@@ -13,8 +13,53 @@ int main() {
 
 	bool add, sub, mul, div, pow;
 	add = true; sub = 1; mul = 1; div = true; pow = true;
-	set(1000, 3, 10, 1);
-	// set_power_signal(false);
+	set(1000, 20, 1000, 0);
+	set_opr(add, sub, mul, div, pow);
+	generate();
+
+	for (int i = 0; i < 10; i++) {
+		if (get_exp(i, s, result) == false) {
+			cout << "problem" << i << endl;
+			system("pause");
+		}
+		cout << "string: " << s << endl;
+		cout << "result: " << result << endl;
+	}
+	cout << endl;
+
+	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression.txt") == false) {
+		cout << "exp problem\n";
+		system("pause");
+	}
+	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer.txt") == false) {
+		cout << "exp problem\n";
+		system("pause");
+	}
+
+	set(1000, 20, 1000, 1);
+	set_opr(add, sub, mul, div, pow);
+	generate();
+
+	for (int i = 0; i < 10; i++) {
+		if (get_exp(i, s, result) == false) {
+			cout << "problem" << i << endl;
+			system("pause");
+		}
+		cout << "string: " << s << endl;
+		cout << "result: " << result << endl;
+	}
+	cout << endl;
+
+	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression.txt") == false) {
+		cout << "exp problem\n";
+		system("pause");
+	}
+	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer.txt") == false) {
+		cout << "exp problem\n";
+		system("pause");
+	}
+
+	set(1000, 20, 1000, 2);
 	set_opr(add, sub, mul, div, pow);
 	generate();
 
