@@ -59,7 +59,7 @@ int main() {
 		system("pause");
 	}
 
-	set(1000, 20, 1000, 2);
+	set(10, 20, 1000, 2);
 	set_opr(add, sub, mul, div, pow);
 	generate();
 

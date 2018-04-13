@@ -113,7 +113,7 @@ ostream& operator<<(ostream& os, const Fraction& f) {
 		os << f.numer;
 	}
 	else {
-		os << f.numer << '/' << f.denom;
+		os << f.numer / f.denom << '\'' << f.numer % f.denom << '/' << f.denom;
 	}
 	return os;
 }
