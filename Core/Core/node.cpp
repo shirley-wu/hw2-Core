@@ -254,7 +254,8 @@ void to_answer(Node * p, char *s) {
 
 	char ir[200];
 	if (p->numtype == INT) snprintf(ir, 200, "%d", p->ival);
-	else if (p->numtype == DOUBLE) snprintf(ir, 200, "%.*lf", setprecision(setting.precision), p->dval);
+	//else if (p->numtype == DOUBLE) snprintf(ir, 200, "%.*lf", setprecision(setting.precision), p->dval);
+	else if (p->numtype == DOUBLE) snprintf(ir, 200, "%lf",p->dval);
 	else snprintf(ir, 200, "%d", p->ival);
 	snprintf(s, strlen(ir), ir);
 }
