@@ -9,6 +9,21 @@ using namespace std;
 
 
 int main() {
+	char s[10];
+
+	/*int i = snprintf(s, 10, "hi");
+	cout << i << endl;
+	cout << s << endl;
+	int j = snprintf(s + i, 10 - i, "hello");
+	cout << j << endl;
+	cout << s << endl;
+	int k = snprintf(s, 5, "1234567890");
+	cout << k << endl;
+	cout << s << endl;
+
+	system("pause");
+	return 0;*/
+
 	generate();
 	// 默认生成十个式子，详见github上面的api说明或者直接看代码=w=
 
