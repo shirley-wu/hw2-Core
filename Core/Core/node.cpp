@@ -202,3 +202,109 @@ void to_answer(Node * p, string& s) {
 	else ir << p->fval;
 	getline(ir, s);
 }
+
+
+int to_expression(Node * t, char *s, int start, int end) {
+	if (t->nodetype == NUM) {
+		return to_answer(t, s, start, end);
+	}
+	else {
+		if (t->lchild->nodetype == OPR && prior(t->lchild->opr) < prior(t->opr)) {
+			s[start++] = '(';
+			if (start >= end) throw(Overlength());
+			start = to_expression(t->lchild, s, start, end);
+			s[start++] = ')';
+			if (start >= end) throw(Overlength());
+		}
+		else start = to_expression(t->lchild, s, start, end);
+
+		if (t->opr == ADD) {
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+			s[start++] = '+';
+			if (start >= end) throw(Overlength());
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+		}
+		else if (t->opr == SUB) {
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+			s[start++] = '-';
+			if (start >= end) throw(Overlength());
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+		}
+		else if (t->opr == MUL) {
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+			s[start++] = '*';
+			if (start >= end) throw(Overlength());
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+		}
+		else if (t->opr == DIV) {
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+			s[start++] = '/';
+			if (start >= end) throw(Overlength());
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+		}
+		else if (t->opr == POW) {
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+			if (setting.power_signal) {
+				s[start++] = '^';
+				if (start >= end) throw(Overlength());
+			}
+			else {
+				s[start++] = '*';
+				if (start >= end) throw(Overlength());
+				s[start++] = '*';
+				if (start >= end) throw(Overlength());
+			}
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+		}
+		else {
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+			s[start++] = '?';
+			if (start >= end) throw(Overlength());
+			s[start++] = ' ';
+			if (start >= end) throw(Overlength());
+		}
+
+		if (t->rchild->nodetype == OPR && prior(t->rchild->opr) <= prior(t->opr)) {
+			s[start++] = '(';
+			if (start >= end) throw(Overlength());
+			start = to_expression(t->rchild, s, start, end);
+			s[start++] = ')';
+			if (start >= end) throw(Overlength());
+		}
+		else start = to_expression(t->rchild, s, start, end);
+	}
+	s[start] = 0;
+	return start;
+} 
+
+
+int to_answer(Node * p, char *s, int start, int end) {
+	if (p->calculated == false) p->calc_val();
+
+	int size = end - start;
+
+	if (p->numtype == INT) {
+		int k = snprintf(s + start, size, "%d", p->ival);
+		if (k > size) throw(Overlength());
+		else start += k;
+	}
+	else if (p->numtype == DOUBLE) {
+		int k = snprintf(s + start, size, "%.*lf", setting.precision, p->dval);
+		if (k > size) throw(Overlength());
+		else start += k;
+	}
+	else return p->fval.to_str(s, start, end);
+
+	return start;
+}

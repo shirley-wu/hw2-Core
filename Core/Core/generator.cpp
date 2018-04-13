@@ -226,6 +226,34 @@ bool get_exp(int i, string& s, string& result) {
 }
 
 
+bool get_expression(int i, char *s, int size) {
+	if (i < 0 || (unsigned)i >= arr.size()) return false;
+
+	try {
+		to_expression(arr[i], s, 0, size);
+	}
+	catch (Overlength& e) {
+		return false;
+	}
+
+	return true;
+}
+
+
+bool get_answer(int i, char *s, int size) {
+	if (i < 0 || (unsigned)i >= arr.size()) return false;
+
+	try {
+		to_answer(arr[i], s, 0, size);
+	}
+	catch (Overlength& e) {
+		return false;
+	}
+
+	return true;
+}
+
+
 bool exp_to_file(const char* dir) {
 	ofstream is (dir);
 	if (is.fail()) return false;
