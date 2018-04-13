@@ -3,7 +3,7 @@
 #include <string>
 
 #ifdef CORE_DLL_IMPLEMENT
-#define CORE_DLL_API
+#define CORE_DLL_API __declspec(dllexport)
 #else
 #define CORE_DLL_API __declspec(dllimport)
 #endif

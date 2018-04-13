@@ -9,116 +9,28 @@ using namespace std;
 
 
 int main() {
-	string s, result;
+	char s[100], result[100];
 
 	bool add, sub, mul, div, pow;
 	add = true; sub = 1; mul = 1; div = true; pow = true;
-	set(1000, 20, 1000, 0);
-	set_opr(add, sub, mul, div, pow);
-	generate();
-
-	for (int i = 0; i < 10; i++) {
-		if (get_exp(i, s, result) == false) {
-			cout << "problem" << i << endl;
-			system("pause");
-		}
-		cout << "string: " << s << endl;
-		cout << "result: " << result << endl;
-	}
-	cout << endl;
-
-	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression.txt") == false) {
-		cout << "exp problem\n";
-		system("pause");
-	}
-	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer.txt") == false) {
-		cout << "exp problem\n";
-		system("pause");
-	}
-
-	set(1000, 20, 1000, 1);
-	set_opr(add, sub, mul, div, pow);
-	generate();
-
-	for (int i = 0; i < 10; i++) {
-		if (get_exp(i, s, result) == false) {
-			cout << "problem" << i << endl;
-			system("pause");
-		}
-		cout << "string: " << s << endl;
-		cout << "result: " << result << endl;
-	}
-	cout << endl;
-
-	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression.txt") == false) {
-		cout << "exp problem\n";
-		system("pause");
-	}
-	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer.txt") == false) {
-		cout << "exp problem\n";
-		system("pause");
-	}
-
-	set(10, 20, 1000, 2);
-	set_opr(add, sub, mul, div, pow);
-	generate();
-
-	char *cs = new char[10000];
-	char *cresult = new char[10000];
-	get_exp(0, cs, 10000, cresult);
-	cout << "s" << cs << endl;
-	cout << "cresult" << cresult << endl;
-	delete[] cs;
-	delete[] cresult;
-
-	get_exp(0, s, result);
-	cout << "s" << s << endl;
-	cout << "cresult" << result << endl;
-
-	system("pause");
-
-	for (int i = 0; i < 10; i++) {
-		if (get_exp(i, s, result) == false) {
-			cout << "problem" << i << endl;
-			system("pause");
-		}
-		cout << "string: " << s << endl;
-		cout << "result: " << result << endl;
-	}
-	cout << endl;
-
-	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression.txt") == false) {
-		cout << "exp problem\n";
-		system("pause");
-	}
-	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer.txt") == false) {
-		cout << "exp problem\n";
-		system("pause");
-	}
-/*
-	set(1000, 20, 10, 1);
-	generate();
-	for (int i = 0; i < 10; i++) {
-		if (get_exp(i, s, result) == false) {
-			cout << "problem" << i << endl;
-			system("pause");
-		}
-		cout << "string: " << s << endl;
-		cout << "result: " << result << endl;
-	}
-	cout << endl;
-
 	set(1000, 20, 10, 2);
+	set_opr(add, sub, mul, div, pow);
 	generate();
+
 	for (int i = 0; i < 10; i++) {
-		if (get_exp(i, s, result) == false) {
+		if (get_expression(i, s, 100) == false) {
+			cout << "problem" << i << endl;
+			system("pause");
+		}
+		if (get_answer(i, result, 100) == false) {
 			cout << "problem" << i << endl;
 			system("pause");
 		}
 		cout << "string: " << s << endl;
 		cout << "result: " << result << endl;
 	}
-*/
+	cout << endl;
+
 	clear();
 
 	system("pause");
