@@ -15,13 +15,13 @@ Setting setting;
 
 
 void set(int num_max, int num_limit, int exp_num, int type, int precision) {
-	if (setting.num_max > 0) {
+	if (num_max > 0) {
 		setting.num_max = num_max;
 	}
-	if (setting.num_limit > 0) {
+	if (num_limit > 0) {
 		setting.num_limit = num_limit;
 	}
-	if (setting.exp_num > 0) {
+	if (exp_num > 0) {
 		setting.exp_num = exp_num;
 	}
 	if (0 <= type && type <= 2) {

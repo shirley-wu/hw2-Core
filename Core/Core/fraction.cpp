@@ -113,7 +113,8 @@ ostream& operator<<(ostream& os, const Fraction& f) {
 		os << f.numer;
 	}
 	else {
-		os << f.numer / f.denom << '\'' << f.numer % f.denom << '/' << f.denom;
+		if (f.numer > f.denom) os << f.numer / f.denom << '\'';
+		os << f.numer % f.denom << '/' << f.denom;
 	}
 	return os;
 }
@@ -129,12 +130,14 @@ int Fraction::to_str(char * s, int start, int end) const {
 		else start += k;
 	}
 	else {
-		k = snprintf(s + start, size, "%lld", numer / denom);
-		if (k > size) throw(Overlength());
-		else start += k;
+		if (numer > denom) {
+			k = snprintf(s + start, size, "%lld", numer / denom);
+			if (k > size) throw(Overlength());
+			else start += k;
 
-		s[start++] = '\'';
-		if (start >= end) throw(Overlength());
+			s[start++] = '\'';
+			if (start >= end) throw(Overlength());
+		}
 
 		k = snprintf(s + start, size, "%lld", numer % denom);
 		if (k > size) throw(Overlength());

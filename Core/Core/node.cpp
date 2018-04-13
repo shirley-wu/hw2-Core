@@ -22,9 +22,7 @@ Node* Node::randNum() {
 		if (setting.num_max == 0) p->dval = 0;
 		else {
 			int base = pow(10, setting.precision);
-			int real_max = base * setting.num_max;
-			int val = rand() % real_max;
-			p->dval = (double)val / base;
+			p->dval = (rand() % setting.num_max) + (double)(rand() % base) / base;
 		}
 	}
 	else if (p->numtype == FRACTION) {

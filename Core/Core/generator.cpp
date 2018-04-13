@@ -227,7 +227,7 @@ bool get_exp(int i, string& s, string& result) {
 
 
 bool get_expression(int i, char *s, int size) {
-	if (i < 0 || (unsigned)i >= arr.size()) return false;
+	if (i < 0 || (unsigned)i >= arr.size() || size <= 0) return false;
 
 	try {
 		to_expression(arr[i], s, 0, size);
@@ -241,7 +241,7 @@ bool get_expression(int i, char *s, int size) {
 
 
 bool get_answer(int i, char *s, int size) {
-	if (i < 0 || (unsigned)i >= arr.size()) return false;
+	if (i < 0 || (unsigned)i >= arr.size() || size <= 0) return false;
 
 	try {
 		to_answer(arr[i], s, 0, size);
