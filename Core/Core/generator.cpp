@@ -88,7 +88,7 @@ Node * generate_tree(int limit, bool num_en) {
 
 		if (setting.type == INT && opr == DIV) {
 			int denom = rand() % (setting.num_max - 1) + 1;
-			int numer = (rand() % (setting.num_max / denom) + 1) * denom;
+			int numer = (rand() % (setting.num_max / denom)) * denom;
 			p->set_lchild(create_int_node(numer, limit1));
 			p->set_rchild(create_int_node(denom, limit2));
 			p->calc_val();

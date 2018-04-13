@@ -9,26 +9,38 @@ using namespace std;
 
 
 int main() {
+	string s, result;
+	const int n = 1000;
+
+	set(1000, 100, n, 0);
 	generate();
-	// 默认生成十个式子，详见github上面的api说明或者直接看代码=w=
-
-	char *cs = new char[10000];
-	char *cresult = new char[10000];
-
-	for (int i = 0; i < 10; i++) {
-		get_exp(i, cs, 10000, cresult);
-		cout << "s" << cs << endl;
-		cout << "cresult" << cresult << endl;
-
-		string s, result;
-		get_exp(i, s, result);
-		cout << "s" << s << endl;
-		cout << "cresult" << result << endl;
-
-		system("pause");
+	for (int i = 0; i < n; i++) {
+		if (get_exp(i, s, result) == false) {
+			system("pause");
+		}
 	}
-	delete[] cs;
-	delete[] cresult;
+	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression0.txt") == false) system("pause");
+	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer0.txt") == false)system("pause");
+
+	set(1000, 100, n, 1);
+	generate();
+	for (int i = 0; i < n; i++) {
+		if (get_exp(i, s, result) == false) {
+			system("pause");
+		}
+	}
+	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression0.txt") == false) system("pause");
+	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer0.txt") == false)system("pause");
+
+	set(1000, 100, n, 2);
+	generate();
+	for (int i = 0; i < n; i++) {
+		if (get_exp(i, s, result) == false) {
+			system("pause");
+		}
+	}
+	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression0.txt") == false) system("pause");
+	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer0.txt") == false)system("pause");
 
 	clear();
 
