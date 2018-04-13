@@ -17,7 +17,10 @@ CORE_DLL_API void set_power_signal(bool s);
 CORE_DLL_API void generate();
 CORE_DLL_API void clear();
 
-CORE_DLL_API bool get_exp(int i, char *s, int size, char *result);
+CORE_DLL_API bool get_exp(int i, std::string& s, std::string& result);
+
+CORE_DLL_API bool get_expression(int i, char *s, int size);
+CORE_DLL_API bool get_answer(int i, char *s, int size);
 
 CORE_DLL_API bool exp_to_file(const char* dir);
 CORE_DLL_API bool ans_to_file(const char* dir);

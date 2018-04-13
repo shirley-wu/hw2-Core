@@ -9,40 +9,28 @@ using namespace std;
 
 
 int main() {
-	string s, result;
-	const int n = 1000;
-
-	/*char ss[10];
-
-	int i = snprintf(ss, 10, "%.*f", 3, 1.5555555);
-	cout << i << endl;
-	cout << ss << endl;
-	int j = snprintf(ss + i, 10 - i, "hello");
-	cout << j << endl;
-	cout << ss << endl;
-	int k = snprintf(ss, 5, "1234567890");
-	cout << k << endl;
-	cout << ss << endl;
-
-	system("pause");
-	return 0;*/
-
-	generate();
-
-	char *cs = new char[10000];
-	char *cresult = new char[10000];
+	const int size = 100;
+	char *cs = new char[size];
+	char *cresult = new char[size];
 
 	set(1000, 10, 10, 1);
 	generate();
 	for (int i = 0; i < 10; i++) {
-		if (get_exp(i, s, result) == false) {
-			system("pause");
+		bool s1 = get_expression(i, cs, size);
+		bool s2 = get_answer(i, cresult, size);
+		if (s1 && s2) {
+			cout << cs << " = " << cresult << endl;
 		}
-		if (get_exp(i, cs, 1000, cresult) == false) {
-			system("pause");
+		else {
+			if (s1 == false) {
+				cout << "false1\n";
+			}
+			else cout << "expression " << cs << endl;
+			if (s2 == false) {
+				cout << "false2\n";
+			}
+			else cout << "answer " << cresult << endl;
 		}
-		cout << s << " = " << result << endl;
-		cout << cs << " = " << cresult << endl;
 	}
 	system("pause");
 	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression0.txt") == false) system("pause");
@@ -51,26 +39,46 @@ int main() {
 	set(1000, 10, 10, 0);
 	generate();
 	for (int i = 0; i < 10; i++) {
-		if (get_exp(i, s, result) == false) {
-			system("pause");
+		bool s1 = get_expression(i, cs, size);
+		bool s2 = get_answer(i, cresult, size);
+		if (s1 && s2) {
+			cout << cs << " = " << cresult << endl;
 		}
-		if (get_exp(i, cs, 1000, cresult) == false) {
-			system("pause");
+		else {
+			if (s1 == false) {
+				cout << "false1\n";
+			}
+			else cout << "expression " << cs << endl;
+			if (s2 == false) {
+				cout << "false2\n";
+			}
+			else cout << "answer " << cresult << endl;
 		}
-		cout << s << " = " << result << endl;
-		cout << cs << " = " << cresult << endl;
 	}
 	system("pause");
 	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression0.txt") == false) system("pause");
 	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer0.txt") == false)system("pause");
 
-	set(1000, 100, n, 2);
+	set(1000, 100, 10, 2);
 	generate();
-	for (int i = 0; i < n; i++) {
-		if (get_exp(i, s, result) == false) {
-			system("pause");
+	for (int i = 0; i < 10; i++) {
+		bool s1 = get_expression(i, cs, size);
+		bool s2 = get_answer(i, cresult, size);
+		if (s1 && s2) {
+			cout << cs << " = " << cresult << endl;
+		}
+		else {
+			if (s1 == false) {
+				cout << "false1\n";
+			}
+			else cout << "expression " << cs << endl;
+			if (s2 == false) {
+				cout << "false2\n";
+			}
+			else cout << "answer " << cresult << endl;
 		}
 	}
+	system("pause");
 	if (exp_to_file("D:\\Users\\wu-pc\\repos\\hw2\\expression0.txt") == false) system("pause");
 	if (ans_to_file("D:\\Users\\wu-pc\\repos\\hw2\\answer0.txt") == false)system("pause");
 

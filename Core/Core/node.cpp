@@ -304,7 +304,7 @@ int to_answer(Node * p, char *s, int start, int end) {
 		if (k > size) throw(Overlength());
 		else start += k;
 	}
-	//else if (p->numtype == DOUBLE) snprintf(ir, 200, "%lf",p->dval);
+	else return p->fval.to_str(s, start, end);
 
 	return start;
 }

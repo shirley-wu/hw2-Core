@@ -216,14 +216,37 @@ Node * create_int_node(int a, int limit) {
 }
 
 
-bool get_exp(int i, char *s, int size, char *result) {
+bool get_exp(int i, string& s, string& result) {
+	if (i < 0 || (unsigned)i >= arr.size()) return false;
+
+	Node * t = arr[i];
+	to_expression(t, s);
+	to_answer(t, result);
+	return true;
+}
+
+
+bool get_expression(int i, char *s, int size) {
 	if (i < 0 || (unsigned)i >= arr.size()) return false;
 
 	try {
 		to_expression(arr[i], s, 0, size);
-		to_answer(arr[i], result, 0, size);
 	}
-	catch (Overflow& e) {
+	catch (Overlength& e) {
+		return false;
+	}
+
+	return true;
+}
+
+
+bool get_answer(int i, char *s, int size) {
+	if (i < 0 || (unsigned)i >= arr.size()) return false;
+
+	try {
+		to_answer(arr[i], s, 0, size);
+	}
+	catch (Overlength& e) {
 		return false;
 	}
 
