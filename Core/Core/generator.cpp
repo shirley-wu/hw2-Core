@@ -229,9 +229,8 @@ bool get_exp(int i, string& s, string& result) {
 bool get_exp(int i, char *s, int size, char *result) {
 	if (i < 0 || (unsigned)i >= arr.size()) return false;
 
-	Node * t = arr[i];
-	to_expression(t, s, size);
-	to_answer(t, result);
+	to_expression(arr[i], s, 0, size);
+	to_answer(arr[i], result, 0, size);
 
 	return true;
 }
