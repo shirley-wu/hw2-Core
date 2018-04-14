@@ -124,7 +124,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Library Include="..\..\Core\x64\Debug\Core.lib" />
+    <Library Include="..\..\..\hw2-CoreDll\x64\Debug\Core.lib" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -11,9 +11,9 @@ int main() {
 	char s[10000], result[10000];
 
 	bool add, sub, mul, div, pow;
-	add = 0; sub = 0; mul = 0; div = 0; pow = true;
+	add = 1; sub = 1; mul = 1; div = 1; pow = 0;
 	set_power_signal(1);
-	set(10, 20, 10,2);
+	set(10, 3, 10, 2);
 	set_opr(add, sub, mul, div, pow);
 	generate();
 
