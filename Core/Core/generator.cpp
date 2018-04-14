@@ -82,7 +82,7 @@ Node * generate_tree(int limit, bool num_en) {
 		int limit1, limit2;
 		if (limit == 2) limit1 = limit2 = 1;
 		else {
-			limit1 = (rand() % (limit - 2)) + 1;
+			limit1 = (rand() % (limit - 1)) + 1;
 			limit2 = limit - limit1;
 		}
 
@@ -189,7 +189,7 @@ Node * create_int_node(int a, int limit) {
 		int limit1, limit2;
 		if (limit == 2) limit1 = limit2 = 1;
 		else {
-			limit1 = (rand() % (limit - 2)) + 1;
+			limit1 = (rand() % (limit - 1)) + 1;
 			limit2 = limit - limit1;
 		}
 
